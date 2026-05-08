@@ -1,1 +1,1 @@
-PHẦN D — VIDEO THỰC HÀNH OBS: [Link YouTube](https://www.youtube.com/watch?v=tgzpTd84ano)
+PHẦN D — VIDEO THỰC HÀNH OBS: [Link YouTube](https://www.youtube.com/watch?v=tgzpTd84ano).
