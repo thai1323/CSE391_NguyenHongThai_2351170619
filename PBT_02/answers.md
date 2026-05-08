@@ -59,7 +59,7 @@
 3. Thuộc tính alt (Mô tả ảnh)
 - Dùng để: Giúp Google hiểu ảnh, hỗ trợ người khiếm thị đọc nội dung và hiện chữ nếu ảnh bị lỗi.
 
-- 3 ví dụ tốt về <alt>:
+- 3 ví dụ tốt về thẻ <alt>:
 + iPhone 16: alt="iPhone 16 màu xanh lưu ly, mặt lưng nhám" (Mô tả chi tiết để bán hàng).
 + Ảnh trang trí: alt="" (Để trống hoàn toàn để trình đọc máy bỏ qua).
 + Biểu đồ Q1/2026: alt="Biểu đồ doanh thu Q1/2026 tăng 15%, đạt mốc 50 tỷ".
