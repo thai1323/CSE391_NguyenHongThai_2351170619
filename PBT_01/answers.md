@@ -17,7 +17,7 @@ Bước 5 (Rendering): Trình duyệt nhận file và thực hiện quy trình: 
 
 Tab Network cho thấy các requests/responses. Nó giúp lập trình viên biết website tải những tài nguyên nào (HTML, ảnh, CSS, JS), file nào nặng nhất và tốc độ tải trang.
 
-![Mô tả ảnh: Tab Network lọc CSS của Shopee](./screenshots/network_shopee.png)
+![Mô tả ảnh: Tab Network lọc CSS của Shopee](./screenshots/network_shopee.png).
 
 **Câu A2 — Semantic HTML**
 
