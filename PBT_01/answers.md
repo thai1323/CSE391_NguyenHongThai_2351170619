@@ -211,7 +211,7 @@ Có dùng <thead>, <tbody>: Có. Trang web sử dụng cấu trúc bảng chuẩ
 **Câu C2 — So sánh & Tranh luận**
 
 **PHẢN BIỆN: SEMANTIC HTML LÀ BẮT BUỘC**
-Việc lạm dụng thẻ <div> không chỉ là vấn đề thói quen mà còn gây hại trực tiếp đến chất lượng sản phẩm:
+Việc lạm dụng quá mức thẻ <div> không chỉ là vấn đề thói quen mà còn gây hại trực tiếp đến chất lượng sản phẩm:
 
 **SEO (Tối ưu tìm kiếm):** Google Bot sử dụng các thẻ semantic như <main>, <article> để phân loại thông tin. Nếu chỉ dùng <div>, bot sẽ khó xác định nội dung trọng tâm, dẫn đến thứ hạng website bị thấp hơn.
 
