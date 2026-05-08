@@ -78,7 +78,7 @@ Cách 2:
 **PHẦN C — PHÂN TÍCH & SUY LUẬN**
 **Câu C1 — Debug Form**
 1. Lỗi 1: Input "Tên" không có <label for="...">
-Sửa: <label for="fullname">Tên:</label> <input type="text" id="fullname" name="fullname" required> (Giúp trình đọc màn hình nhận diện và tăng diện tích click).
+Sửa: <label for="fullname">Tên:</label> <input type="text" id="fullname" name="fullname" required> (Giúp trình đọc màn hình nhận diện và tăng diện tích click chuột).
 
 2. Lỗi 2: Input Email chỉ dùng placeholder mà không có label
 Sửa: <label for="email">Email:</label> <input type="email" id="email" name="email" placeholder="Email của bạn" required> (Placeholder biến mất khi nhập chữ, không thể thay thế label).
