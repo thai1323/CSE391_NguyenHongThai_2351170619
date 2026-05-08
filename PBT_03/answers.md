@@ -23,3 +23,20 @@ CÂU HỎI THÊM:
 Nếu áp dụng đồng thời cả 3 cách cho cùng 1 phần tử: Inline CSS sẽ "THẮNG".
 Giải thích:Độ ưu tiên (Specificity): Trình duyệt chấm điểm ưu tiên cho Inline CSS là cao nhất ($1000$ điểm), vượt trội hoàn toàn so với Internal và External CSS (chỉ khoảng $1 - 100$ điểm tùy bộ chọn).
 Nếu so sánh Internal và External CSS: Do hai cách này có độ ưu tiên ngang nhau, quy tắc Cascade (Dòng chảy từ trên xuống) sẽ quyết định: Style nào được trình duyệt đọc sau (nằm ở dòng dưới trong file HTML) sẽ ghi đè và thắng style viết trước.
+**Câu A2 — CSS Selectors — Dự đoán kết quả**
+Kết quả dự đoán các phần tử được chọn từ đoạn mã HTML mẫu:
+1. h1 → Chọn: ShopTLU
+
+2. .price → Chọn: 25.990.000đ | 45.990.000đ
+
+3. #app header → Chọn: Toàn bộ khối header chứa chữ ShopTLU và các liên kết Home, Products, About
+
+4. nav a:first-child → Chọn: Home
+
+5. .product.featured h2 → Chọn: MacBook Pro
+
+6. article > p → Chọn: 25.990.000đ | Mô tả sản phẩm... (của iPhone 16) | 45.990.000đ | Mô tả sản phẩm... (của MacBook Pro)
+
+7. a[href="/"] → Chọn: Home
+
+8. .top-bar.dark h1 → Chọn: ShopTLU
