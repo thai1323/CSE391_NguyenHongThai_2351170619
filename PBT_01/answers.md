@@ -23,7 +23,7 @@ Tab Network cho thấy các requests/responses. Nó giúp lập trình viên bi�
 
 **1. Tại sao SEO thấp?**
 
-Trang web bị lỗi "Div Soup" (dùng <div> cho mọi thứ). Google không hiểu được cấu trúc nội dung, vai trò của từng phần, dẫn đến đánh giá thấp.
+Trang web bị lỗi "Div Soup" (dùng <div> cho mọi thứ) nên Google không hiểu được cấu trúc nội dung, vai trò của từng phần, dẫn đến đánh giá thấp.
 
 **2. 4 lỗi Semantic và cách sửa:**
 
