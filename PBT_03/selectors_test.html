@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Kiểm chứng CSS Selectors</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; line-height: 1.5; }
+        #app { border: 2px dashed #ccc; padding: 15px; margin-bottom: 20px; }
+        
+        /* Tô màu nền màu vàng để làm nổi bật phần tử được chọn */
+        .highlight { background-color: #fef08a !important; border: 2px solid #eab308; }
+    </style>
+</head>
+<body>
+
+    <h3>Khung giao diện kiểm chứng:</h3>
+    <div id="app">
+        <header class="top-bar dark">
+            <h1 class="test-1 test-8">ShopTLU</h1>
+            <nav>
+                <a href="/" class="active test-4 test-7">Home</a>
+                <a href="/products">Products</a>
+                <a href="/about">About</a>
+            </nav>
+        </header>
+        <main>
+            <article class="product">
+                <h2>iPhone 16</h2>
+                <p class="price test-2 test-6">25.990.000đ</p>
+                <p class="test-6">Mô tả sản phẩm...</p>
+            </article>
+            <article class="product featured">
+                <h2 class="test-5">MacBook Pro</h2>
+                <p class="price test-2 test-6">45.990.000đ</p>
+                <p class="test-6">Mô tả sản phẩm...</p>
+            </article>
+        </main>
+    </div>
+
+    <h3>Chọn Selector để kiểm chứng (Click vào nút để xem vùng chọn):</h3>
+    <button onclick="testSelector('h1')">1. h1</button>
+    <button onclick="testSelector('.price')">2. .price</button>
+    <button onclick="testSelector('#app header')">3. #app header</button>
+    <button onclick="testSelector('nav a:first-child')">4. nav a:first-child</button>
+    <button onclick="testSelector('.product.featured h2')">5. .product.featured h2</button>
+    <button onclick="testSelector('article > p')">6. article > p</button>
+    <button onclick="testSelector('a[href=\x22/\x22]')">7. a[href="/"]</button>
+    <button onclick="testSelector('.top-bar.dark h1')">8. .top-bar.dark h1</button>
+
+    <p><strong>Kết quả phần tử được chọn:</strong> <span id="log" style="color: blue;">(Nhấp nút phía trên để kiểm tra)</span></p>
+
+    <script>
+        function testSelector(selector) {
+            // Reset các highlight cũ
+            document.querySelectorAll('#app *').forEach(el => el.classList.remove('highlight'));
+            
+            // Tìm và highlight các phần tử mới
+            const elements = document.querySelectorAll(`#app ${selector}`);
+            const texts = [];
+            
+            elements.forEach(el => {
+                el.classList.add('highlight');
+                let text = el.innerText || el.textContent;
+                text = text.replace(/\s+/g, ' ').trim();
+                if (text.length > 50) text = text.substring(0, 47) + "...";
+                texts.push(`"${text}"`);
+            });
+            
+            document.getElementById('log').innerHTML = `Tìm thấy <strong>${elements.length}</strong> phần tử: ${texts.join(' | ')}`;
+        }
+    </script>
+</body>
+</html>
