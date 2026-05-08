@@ -65,7 +65,7 @@
 + Biểu đồ Q1/2026: alt="Biểu đồ doanh thu Q1/2026 tăng 15%, đạt mốc 50 tỷ".
 
 **Câu A5 — Media**
-So sánh Cách 1 (Dùng <img>) và Cách 2 (Dùng <figure>) khi nào dùng:
+So sánh giữa Cách 1 (Dùng <img>) và Cách 2 (Dùng <figure>) khi nào dùng:
 Cách 1: 
 - Khi ảnh là một phần của nội dung văn bản: Ảnh bổ trợ trực tiếp cho câu văn xung quanh, nếu tách ra thì đoạn văn sẽ mất ý nghĩa.
 - Khi không cần chú thích hiển thị: Ảnh chỉ cần mô tả qua thuộc tính alt cho máy đọc, không cần dòng chữ giải thích bên dưới cho người dùng bình thường.
