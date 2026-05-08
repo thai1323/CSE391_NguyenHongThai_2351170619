@@ -110,7 +110,7 @@ Sửa: Thêm thuộc tính name="..." cho tất cả các thẻ input (Đây là
 - Trả lời: Chưa đủ an toàn.
 - Vì: Vì HTML5 validation diễn ra ở phía Client (trình duyệt). Người dùng có hiểu biết về kỹ thuật có thể dễ dàng dùng F12 (Inspect Element) để xóa bỏ thuộc tính required hoặc pattern, từ đó gửi dữ liệu sai lệch về server.
 
-3. 3 loại validation HTML5 KHÔNG THỂ làm được
+3. 3 loại validation HTML5 KHÔNG THỂ làm được:
 - Kiểm tra tính duy nhất (Unique): Ví dụ kiểm tra xem Email/Số tài khoản đã tồn tại trong Database hay chưa.
 - So khớp dữ liệu giữa 2 ô (Comparison): Ví dụ kiểm tra "Mật khẩu" và "Nhập lại mật khẩu" có trùng khớp nhau không.
 - Validation phụ thuộc (Conditional): Ví dụ nếu chọn phương thức "Chuyển khoản" thì mới bắt buộc nhập "Số tài khoản".
