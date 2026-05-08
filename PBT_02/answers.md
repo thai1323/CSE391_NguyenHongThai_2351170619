@@ -34,7 +34,7 @@
 
 **Câu A3 — Accessibility**
 1. <label for="email"> quan trọng cho người dùng screen reader vì:
-- Kết nối trực tiếp: Nó liên kết văn bản mô tả với ô nhập liệu qua thuộc tính id.
+- Kết nối trực tiếp: Nó liên kết văn bản mô tả với ô nhập liệu qua thuộc tính mã.
 - Thông báo ngữ cảnh: Khi người khiếm thị di chuyển tiêu điểm (focus) vào ô nhập, máy sẽ đọc ngay "Email" để họ biết cần nhập gì. Nếu không có, máy chỉ đọc chung chung là "Edit text", rất dễ gây nhầm lẫn.
 
 2. 
