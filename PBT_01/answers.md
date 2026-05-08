@@ -78,7 +78,7 @@ Dùng Table để dàn trang là kỹ thuật cũ, hiện tại không nên dùn
 
 Sai Semantic: Table chỉ dành cho dữ liệu thống kê, không phải để chia cột trang web.
 
-Khó Responsive: Table rất khó co giãn trên màn hình điện thoại (Mobile).
+Khó Responsive: Table rất khó co giãn trên màn hình điện thoại.
 
 Code rối: Cấu trúc thẻ lồng nhau quá nhiều (tr, td) gây khó bảo trì so với CSS Flexbox/Grid.
 
