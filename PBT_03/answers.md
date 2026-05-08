@@ -40,3 +40,33 @@ Kết quả dự đoán các phần tử được chọn từ đoạn mã HTML m
 7. a[href="/"] → Chọn: Home
 
 8. .top-bar.dark h1 → Chọn: ShopTLU
+**CÂU A4 — SPECIFICITY**
+1. Tính Specificity Score (a, b, c) cho mỗi Rule
+Công thức tính điểm ưu tiên (a, b, c) được quy ước như sau:
+    a: Số lượng bộ chọn ID (trọng số cao nhất).
+    b: Số lượng bộ chọn Class, Attribute, Pseudo-class.
+    c: Số lượng bộ chọn Element (thẻ) và Pseudo-element.
+Áp dụng vào các Rule:
+Rule A (p): Chỉ có 1 thẻ p.
+    Score: $(0, 0, 1)
+Rule B (.price): Chỉ có 1 class .price.
+    Score: $(0, 1, 0)
+Rule C (#main-price): Chỉ có 1 ID #main-price.
+    Score: $(1, 0, 0)
+Rule D (p.price): Gồm 1 class .price và 1 thẻ p.
+    Score: $(0, 1, 1)
+2. Element sẽ có màu gì? Giải thích
+Kết quả: Element sẽ có Màu đỏ (red).
+Giải thích: * Trình duyệt sẽ so sánh điểm số từ trái qua phải (so sánh a trước, sau đó đến b, cuối cùng là c).
+    Rule C (#main-price) có điểm số là (1, 0, 0) — sở hữu 1 bộ chọn ID (a=1).
+    Điểm số này lớn hơn tất cả các Rule còn lại (Rule A: (0,0,1), Rule B: (0,1,0), Rule D: (0,1,1) đều có a=0). Do đó, Rule C thắng tuyệt đối.
+3. Nếu thêm thuộc tính style trực tiếp (Inline CSS)
+HTML <p class="price" id="main-price" style="color: orange;">
+Kết quả: Element sẽ có Màu cam (orange).
+Giải thích: * Inline CSS có điểm Specificity vượt trội hoàn toàn so với các bộ chọn trong file CSS bên ngoài (được quy ước thang điểm là (1, 0, 0, 0) với số đầu tiên đại diện cho Inline CSS).
+Do đó, style trực tiếp sẽ ghi đè lên toàn bộ các rule A, B, C, D.
+4. Nếu Rule A thêm !important
+CSSp { color: black !important; } /* Rule A */
+Kết quả: Element sẽ có Màu đen (black).
+Giải thích: * Từ khóa !important không thuộc thang tính điểm Specificity thông thường mà nó là một chỉ thị đặc biệt, thiết lập mức độ ưu tiên tối cao trong CSS.
+    Nó sẽ ghi đè lên mọi rule khác (kể cả ID selector có điểm cao như Rule C hay thậm chí là thuộc tính style màu cam ở câu trên). Do đó, Rule A giành chiến thắng.
