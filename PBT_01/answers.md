@@ -136,7 +136,7 @@ Có dùng <thead>, <tbody>: Có. Trang web sử dụng cấu trúc bảng chuẩ
 
 **PHẦN C — SUY LUẬN**
 **Câu C1 — Thiết kế cấu trúc**
-
+- Thiết kế cấu trúc HTML cho trang chi tiết sản phẩm:
 <!DOCTYPE html>
 <html lang="vi">
 <head>
