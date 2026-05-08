@@ -1,6 +1,6 @@
 **PHẦN A — KIỂM TRA ĐỌC HIỂU**
 **Câu A1 — Input Types**
-- Danh sách 10 HTML5 Input Types:
+- Danh sách 10 HTML5 Input Types gồm:
 1. type="email" → Ô nhập text, tự kiểm tra định dạng @ → Dùng cho form đăng ký tài khoản.
 
 2. type="password" → Ô nhập ẩn ký tự (dấu chấm) → Dùng để nhập mật khẩu thanh toán.
