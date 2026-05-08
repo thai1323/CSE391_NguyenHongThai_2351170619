@@ -58,7 +58,7 @@ Sản phẩm: Dùng <div class="product"> → Sửa: <article> (Dùng cho bài v
 
 Giải thích tại sao:
 
-<div> (Block-level element): Thẻ <div> mặc định chiếm toàn bộ chiều ngang của container và luôn bắt đầu trên một dòng mới. Do đó, "Hộp 1", "Hộp 2" và "Hộp 3" nằm trên các dòng riêng biệt.
+<div> (Block-level element): Thẻ <div> mặc định chiếm toàn bộ chiều ngang của container và luôn bắt đầu trên một dòng mới. Do đó "Hộp 1", "Hộp 2" và "Hộp 3" nằm trên các dòng riêng biệt.
 
 <span> và <strong> (Inline-level element): Các thẻ này chỉ chiếm diện tích vừa đủ nội dung và không bắt đầu dòng mới. Vì vậy, "Text A" và "Text B" hiển thị trên cùng một hàng; "Text C" và "Text D" cũng hiển thị trên cùng một hàng.
 
