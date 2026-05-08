@@ -22,7 +22,7 @@
 10. type="checkbox" → Ô tích chọn (vuông) → Dùng để đồng ý với Điều khoản dịch vụ khi đặt hàng.
 
 **Câu A2 — Validation Attributes**
-1. Trường hợp 1: Trình duyệt báo lỗi "Vui lòng điền vào trường này" vì thuộc tính required bắt buộc input không được để trống, trong khi value="" đang là chuỗi rỗng.
+1. Trường hợp 1: Trình duyệt báo lỗi "Vui lòng điền vào trường này" vì thuộc tính required bắt buộc input không được để trống, trong khi value=" " đang là chuỗi rỗng.
 
 2. Trường hợp 2: Trình duyệt báo lỗi định dạng email không hợp lệ vì type="email" yêu cầu giá trị phải có cấu trúc tên@tênmiền, giá trị "abc" không thỏa mãn điều kiện này.
 
