@@ -70,6 +70,7 @@ CSSp { color: black !important; } /* Rule A */
 Kết quả: Element sẽ có Màu đen (black).
 Giải thích: * Từ khóa !important không thuộc thang tính điểm Specificity thông thường mà nó là một chỉ thị đặc biệt, thiết lập mức độ ưu tiên tối cao trong CSS.
     Nó sẽ ghi đè lên mọi rule khác (kể cả ID selector có điểm cao như Rule C hay thậm chí là thuộc tính style màu cam ở câu trên). Do đó, Rule A giành chiến thắng.
+**PHẦN B — THỰC HÀNH CODE**
 **CÂU B2 — Box Model Lab**
 PHẦN 1 — CHỨNG MINH CONTENT-BOX VS BORDER-BOX
 
@@ -101,3 +102,41 @@ $$\text{Tổng chiều rộng thực tế} = 280\text{px} + 540\text{px} + 280\t
 
 2. Khi sử dụng `border-box`:
 Cả 3 cột tự động co vùng content bên trong lại để giữ nguyên kích thước bề ngoài đúng như khai báo ($250\text{px} + 500\text{px} + 250\text{px} = 1000\text{px}$). Do đó, layout 3 cột xếp thẳng hàng hoàn hảo và khít vừa vặn trong Container.
+**PHẦN C — DEBUG & SUY LUẬN**
+**CÂU C2 — CASCADE PUZZLE**
+Dự đoán:
+1. "Sản phẩm A" (h2): font-size = $20\text{ px}$ | color = Màu xanh lá (green)
+    Về font-size:
+        Có bộ chọn khớp trực tiếp là .card .title { font-size: 20px; } (điểm độ ưu tiên - Specificity: $0, 2, 0$).
+        Dù thẻ cha .container có font-size: 14px;, nhưng thuộc tính được chỉ định trực tiếp (được target) luôn thắng thuộc tính  thừa kế (Inheritance).
+    Về color:
+        Có 2 bộ chọn khớp trực tiếp tranh chấp:
+           #featured .title { color: red; } (Specificity: $1, 1, 0$).
+           .highlight { color: green !important; } (Sử dụng !important).
+        Theo quy tắc Cascade, từ khóa !important phá vỡ mọi thang điểm Specificity thông thường và giành chiến thắng tuyệt đối.
+        Kết quả: color = Màu xanh lá (green).
+2. "Mô tả sản phẩm" (thẻ p đầu tiên): color = Màu xanh dương (blue)
+    Về color:
+        Thẻ <p> này có bộ chọn khớp trực tiếp là .card p { color: inherit; } (Specificity: $0, 1, 1$).
+        Giá trị inherit buộc trình duyệt phải lấy chính xác giá trị thuộc tính color của thẻ cha trực tiếp của nó là .card (ở đây là <div class="card" id="featured">).
+        Thẻ cha .card có bộ chọn khớp trực tiếp là .card { color: blue; }.
+        Kết quả: color thừa kế lại thành Màu xanh dương (blue).
+3. "Sản phẩm B" (h2): font-size = $20\text{ px}$ | color = Màu xanh dương (blue)
+    Về font-size:
+        Tương tự như Sản phẩm A, bộ chọn trực tiếp .card .title { font-size: 20px; } thắng thuộc tính thừa kế font-size: 14px; từ .container.
+        Kết quả: font-size = $20\text{ px}$.
+    Về color:
+        Thẻ <h2> này không có bất kỳ CSS rule nào target trực tiếp vào màu sắc của nó (bộ chọn #featured .title không khớp vì nó không nằm trong ID #featured).
+        Do đó, nó bắt buộc phải thừa kế (inherit) từ thẻ cha gần nhất có chỉ định màu sắc là <div class="card"> (có .card { color: blue; }).
+        Kết quả: color = Màu xanh dương (blue).
+4. "Mô tả sản phẩm B" (p.highlight): color = Màu xanh lá (green)
+    Về color:
+        Thẻ <p> này chịu sự tranh chấp giữa:
+            Bộ chọn target trực tiếp: .card p { color: inherit; } (Specificity: $0, 1, 1$).
+            Bộ chọn target trực tiếp: .highlight { color: green !important; }.
+        Sự hiện diện của thuộc tính !important ở bộ chọn .highlight ngay lập tức vô hiệu hóa giá trị inherit của bộ chọn .card p.
+        Kết quả: color = Màu xanh lá (green).
+**CÂU C1 — DEBUG CSS LAYOUT**
+
+
+
