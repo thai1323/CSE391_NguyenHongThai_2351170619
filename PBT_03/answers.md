@@ -40,6 +40,7 @@ Kết quả dự đoán các phần tử được chọn từ đoạn mã HTML m
 7. a[href="/"] → Chọn: Home
 
 8. .top-bar.dark h1 → Chọn: ShopTLU
+**Câu A3 — Box Model — Tính toán kích thước**
 **CÂU A4 — SPECIFICITY**
 1. Tính Specificity Score (a, b, c) cho mỗi Rule
 Công thức tính điểm ưu tiên (a, b, c) được quy ước như sau:
@@ -137,6 +138,25 @@ Dự đoán:
         Sự hiện diện của thuộc tính !important ở bộ chọn .highlight ngay lập tức vô hiệu hóa giá trị inherit của bộ chọn .card p.
         Kết quả: color = Màu xanh lá (green).
 **CÂU C1 — DEBUG CSS LAYOUT**
+1. Tính chiều rộng thực tế:
+Sidebar: 
+    Width thực tế = width khai báo + padding-left/right + border-left/right
+    Width thực tế = 300px + (20px x 2) + (1px x 2) = 342px
+Content:
+    Width thực tế = width khai báo + padding-left/right + border-left/right
+    Width thực tế = 660px + (30px x 2) + (1px x 2) = 722px
+2. Giải thích tại sao layout bị vỡ:
+Tổng chiều rộng thực tế của Sidebar và Content khi hiển thị trên trình duyệt là:
+    Tổng chiều rộng thực tế = 342px + 722px = 1064px
+Hệ quả: Vì tổng chiều rộng thực tế của hai khối 1064px lớn hơn nhiều so với chiều rộng của phần tử cha bao ngoài .container 960px, trình duyệt không đủ không gian xếp chúng song song. Do đó, khối content nằm phía sau ngay lập tức bị đẩy rơi xuống dòng mới.
 
-
+3. Đưa ra 2 cách sửa khác nhau
+Cách 1: Sử dụng box-sizing: border-box (Khuyên dùng)Trình duyệt sẽ tự động bóp nhỏ vùng chứa nội dung (content-width) bên trong để chiều rộng thực tế của hai khối không bị phình to, giữ nguyên kích thước tổng thể lần lượt đúng là 300px và 660px.
+Giải pháp CSS: Thêm box-sizing: border-box; cho cả .sidebar và .content.
+Cách 2: Không dùng border-box (Tính toán lại thủ công)
+Trừ bớt phần padding và border trực tiếp ra khỏi thuộc tính width được khai báo ban đầu để đạt được chiều rộng thực tế mong muốn:
+    Sidebar (mong muốn thực tế 300px):
+      Width mới = 300px - (20px x 2 padding) - (1px x2 border) = 258px
+    Content (mong muốn thực tế 660px):
+      Width mới = 660px - (30px x 2 padding) - (1px x 2 border) = 598px
 

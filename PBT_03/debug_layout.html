@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug CSS Layout - TLU</title>
+    <link rel="stylesheet" href="debug_layout.css">
+</head>
+<body>
+
+    <h1>DEMO KIỂM CHỨNG DEBUG CSS LAYOUT</h1>
+
+    <!-- CÁCH 1 -->
+    <section>
+        <h2>Cách sửa 1: Sử dụng box-sizing: border-box</h2>
+        <div class="container fix-border-box">
+            <div class="sidebar">
+                <h3>Sidebar</h3>
+                <p>Width: 300px (Kèm padding/border)</p>
+            </div>
+            <div class="content">
+                <h3>Content</h3>
+                <p>Width: 660px (Kèm padding/border)</p>
+            </div>
+            <!-- Clear float -->
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+    <hr style="margin: 40px 0; border: 1px solid #cbd5e1;">
+
+    <!-- CÁCH 2 -->
+    <section>
+        <h2>Cách sửa 2: Không dùng border-box (Tính toán lại thủ công)</h2>
+        <div class="container fix-content-box">
+            <div class="sidebar">
+                <h3>Sidebar</h3>
+                <p>Width đã giảm: 258px</p>
+            </div>
+            <div class="content">
+                <h3>Content</h3>
+                <p>Width đã giảm: 598px</p>
+            </div>
+            <!-- Clear float -->
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+</body>
+</html>

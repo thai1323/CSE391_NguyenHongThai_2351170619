@@ -1,0 +1,87 @@
+/* Reset mặc định */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f8fafc;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1e293b;
+}
+
+h2 {
+    color: #0f172a;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+/* Định dạng cơ sở cho Container */
+.container {
+    width: 960px;
+    margin: 0 auto;
+    border: 3px dashed #64748b;
+    background-color: #ffffff;
+}
+
+/* Base style cho Sidebar và Content */
+.sidebar {
+    background-color: #f1f5f9;
+    border: 1px solid #ccc;
+    float: left;
+}
+
+.content {
+    background-color: #eff6ff;
+    border: 1px solid #ccc;
+    float: left;
+}
+
+/* Clearfix để bọc các phần tử float */
+.clearfix {
+    clear: both;
+}
+
+/* ===================================================
+   CÁCH SỬA 1: Dùng box-sizing: border-box
+   Giữ nguyên width: 300px và 660px, ép padding/border thụt vào trong.
+   =================================================== */
+.fix-border-box .sidebar {
+    box-sizing: border-box;
+    width: 300px;
+    padding: 20px;
+}
+
+.fix-border-box .content {
+    box-sizing: border-box;
+    width: 660px;
+    padding: 30px;
+}
+
+/* ===================================================
+   CÁCH SỬA 2: Không dùng border-box (content-box mặc định)
+   Giảm width khai báo xuống để chiều rộng thực tế khít 960px.
+   =================================================== */
+.fix-content-box .sidebar {
+    box-sizing: content-box;
+    /* Width thực tế mong muốn = 300px
+       Width khai báo = 300px - (20px * 2 padding) - (1px * 2 border) = 258px
+    */
+    width: 258px;
+    padding: 20px;
+}
+
+.fix-content-box .content {
+    box-sizing: content-box;
+    /* Width thực tế mong muốn = 660px
+       Width khai báo = 660px - (30px * 2 padding) - (1px * 2 border) = 598px
+    */
+    width: 598px;
+    padding: 30px;
+}
