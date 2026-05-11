@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Model Lab - TLU</title>
+    <link rel="stylesheet" href="boxmodel.css">
+</head>
+<body>
+
+    <section>
+        <h2>Phần 1 — Chứng minh content-box vs border-box</h2>
+        <div class="box-container">
+            <div class="box box-content">
+                <h3>Hộp 1</h3>
+                <p>box-sizing: content-box</p>
+                <p class="specs">Width: 300px | Padding: 20px | Border: 5px</p>
+            </div>
+            
+            <div class="box box-border">
+                <h3>Hộp 2</h3>
+                <p>box-sizing: border-box</p>
+                <p class="specs">Width: 300px | Padding: 20px | Border: 5px</p>
+            </div>
+        </div>
+    </section>
+
+    <hr style="margin: 40px 0; border: 1px solid #cbd5e1;">
+
+    <section>
+        <h2>Phần 2 — Layout 3 cột trong Container 1000px</h2>
+        <div class="wrapper">
+            <aside class="sidebar-left">
+                <h3>Cột trái (sidebar)</h3>
+                <p>Width: 250px</p>
+                <p>Padding: 15px</p>
+            </aside>
+            <main class="content-center">
+                <h3>Cột giữa (content)</h3>
+                <p>Width: 500px</p>
+                <p>Padding: 20px</p>
+                <p>Đây là khu vực hiển thị nội dung chính của trang web.</p>
+            </main>
+            <aside class="sidebar-right">
+                <h3>Cột phải (ads)</h3>
+                <p>Width: 250px</p>
+                <p>Padding: 15px</p>
+            </aside>
+        </div>
+    </section>
+
+</body>
+</html>

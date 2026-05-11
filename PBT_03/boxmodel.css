@@ -1,0 +1,102 @@
+/* ==========================================
+   1. RESET CSS & ĐỊNH DẠNG CHUNG
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 30px;
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+h2 {
+    color: #0f172a;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* ==========================================
+   2. PHẦN 1: CONTENT-BOX VS BORDER-BOX
+   ========================================== */
+.box-container {
+    display: flex;
+    gap: 30px;
+}
+
+/* Các thuộc tính chung của 2 hộp */
+.box {
+    width: 300px;
+    height: 120px;
+    padding: 20px;
+    border: 5px solid;
+}
+
+/* Hộp 1: content-box (mặc định) */
+.box-content {
+    box-sizing: content-box;
+    border-color: #2563eb;       /* Viền xanh */
+    background-color: #eff6ff;   /* Nền xanh nhạt */
+}
+
+/* Hộp 2: border-box */
+.box-border {
+    box-sizing: border-box;
+    border-color: #ef4444;       /* Viền đỏ */
+    background-color: #fef2f2;   /* Nền đỏ nhạt */
+}
+
+.specs {
+    font-size: 12px;
+    margin-top: 15px;
+    color: #64748b;
+}
+
+/* ==========================================
+   3. PHẦN 2: LAYOUT 3 CỘT
+   ========================================== */
+/* Container bao ngoài giới hạn 1000px */
+.wrapper {
+    width: 1000px;
+    display: flex;
+    border: 3px dashed #64748b; /* Viền nét đứt màu xám để dễ quan sát vùng chứa */
+    background-color: #ffffff;
+    margin-top: 20px;
+}
+
+/* Đảm bảo cả 3 cột đều áp dụng border-box để tránh vỡ layout */
+.wrapper aside, 
+.wrapper main {
+    box-sizing: border-box; 
+}
+
+/* Cột trái */
+.sidebar-left {
+    width: 250px;
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-right: 1px solid #e2e8f0;
+}
+
+/* Cột giữa */
+.content-center {
+    width: 500px;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+/* Cột phải */
+.sidebar-right {
+    width: 250px;
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-left: 1px solid #e2e8f0;
+}

@@ -70,3 +70,34 @@ CSSp { color: black !important; } /* Rule A */
 Kết quả: Element sẽ có Màu đen (black).
 Giải thích: * Từ khóa !important không thuộc thang tính điểm Specificity thông thường mà nó là một chỉ thị đặc biệt, thiết lập mức độ ưu tiên tối cao trong CSS.
     Nó sẽ ghi đè lên mọi rule khác (kể cả ID selector có điểm cao như Rule C hay thậm chí là thuộc tính style màu cam ở câu trên). Do đó, Rule A giành chiến thắng.
+**CÂU B2 — Box Model Lab**
+PHẦN 1 — CHỨNG MINH CONTENT-BOX VS BORDER-BOX
+
+1. Kết quả đo đạc từ trình duyệt (Chrome DevTools):
+Hộp 1 (content-box): chiều rộng thực tế = 350px (đo từ DevTools)
+Hộp 2 (border-box): chiều rộng thực tế = 300px (đo từ DevTools)
+
+ 2. Giải thích sự khác biệt:
+Với Hộp 1 (`content-box`): Đây là cơ chế tính kích thước mặc định của trình duyệt. Thuộc tính `width: 300px` chỉ áp dụng riêng cho vùng chứa nội dung (Content). Chiều rộng thực tế hiển thị trên màn hình sẽ cộng thêm phần đệm và phần viền:
+  $$\text{Chiều rộng thực tế} = \text{Width} + \text{Padding L/R} + \text{Border L/R}$$
+  $$\text{Chiều rộng thực tế} = 300\text{px} + (20\text{px} \times 2) + (5\text{px} \times 2) = 350\text{px}$$
+  Do đó, hộp bị phình to ra ngoài kích thước khai báo ban đầu.
+
+Với Hộp 2 (`border-box`): Trình duyệt khóa chặt chiều rộng thực tế của hộp bằng đúng giá trị khai báo (`width: 300px`). Để làm được điều này, trình duyệt tự động ép/co nhỏ vùng chứa nội dung (Content) bên trong lại:
+  $$\text{Content Width} = \text{Width khai báo} - \text{Padding L/R} - \text{Border L/R}$$
+  $$\text{Content Width} = 300\text{px} - 40\text{px} - 10\text{px} = 250\text{px}$$
+  Giúp kích thước tổng thể luôn cố định mượt mà ở mức 300px.
+PHẦN 2 — PHÂN TÍCH LAYOUT 3 CỘT
+
+1. Phân tích toán học (Tổng kích thước khi KHÔNG dùng `border-box`):
+Nếu 3 cột sử dụng cơ chế mặc định `content-box`, kích thước thực tế hiển thị của từng cột sẽ bị phình ra do cộng dồn padding:
+Cột trái: $\text{rộng} = 250\text{px} + (15\text{px} \times 2 \text{ padding}) = 280\text{px}$
+Cột giữa: $\text{rộng} = 500\text{px} + (20\text{px} \times 2 \text{ padding}) = 540\text{px}$
+Cột phải: $\text{rộng} = 250\text{px} + (15\text{px} \times 2 \text{ padding}) = 280\text{px}$
+
+$$\text{Tổng chiều rộng thực tế} = 280\text{px} + 540\text{px} + 280\text{px} = 1100\text{px}$$
+
+> Kết quả: Vì tổng thực tế ($1100\text{px}$) lớn hơn kích thước của Container ($1000\text{px}$), cột thứ ba (ads) sẽ không đủ chỗ trống để hiển thị trên cùng một hàng và ngay lập tức bị đẩy rơi xuống dòng dưới gây vỡ layout.
+
+2. Khi sử dụng `border-box`:
+Cả 3 cột tự động co vùng content bên trong lại để giữ nguyên kích thước bề ngoài đúng như khai báo ($250\text{px} + 500\text{px} + 250\text{px} = 1000\text{px}$). Do đó, layout 3 cột xếp thẳng hàng hoàn hảo và khít vừa vặn trong Container.
