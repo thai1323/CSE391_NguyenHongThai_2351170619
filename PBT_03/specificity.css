@@ -1,0 +1,49 @@
+* {
+    color: #94a3b8;
+}
+
+
+p {
+    color: #7c3aed;
+}
+
+
+div div p {
+    color: #059669;
+}
+
+
+.text {
+    color: #ea580c;
+}
+
+
+p.text {
+    color: #db2777;
+}
+
+
+.text.highlight {
+    color: #0284c7;
+}
+
+
+.container p.text.highlight {
+    color: #b45309;
+}
+
+
+#demo {
+    color: #e11d48;
+}
+
+
+.main-wrapper #demo.highlight {
+    color: #111827;
+    /* Đen */
+}
+
+
+#app-root #demo {
+    color: #2563eb;
+}
