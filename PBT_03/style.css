@@ -1,0 +1,113 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8fafc; 
+    color: #1e293b;            
+    line-height: 1.6;          
+}
+
+.container {
+    max-width: 960px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+section h2 {
+    color: #0f172a;
+    margin-bottom: 15px;
+    border-left: 5px solid #2563eb;
+    padding-left: 10px;
+}
+
+
+#main-header {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb); 
+    color: #ffffff; /* Chữ trắng */
+    padding: 40px 20px;
+    text-align: center;
+}
+
+#main-header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+
+.nav-bar {
+    background-color: #1f2937; 
+    text-align: center;
+    position: sticky;
+    top: 0;
+}
+
+.nav-link {
+    display: inline-block;
+    color: #d1d5db;           
+    text-decoration: none;    
+    padding: 15px 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+    text-decoration: underline; 
+    background-color: #374151;
+}
+
+.nav-link.active {
+    color: #ffffff;
+    background-color: #2563eb; 
+    border-bottom: 3px solid #60a5fa;
+}
+
+.skills-table {
+    width: 100%;
+    border-collapse: collapse; 
+    margin-top: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden; 
+}
+
+.skills-table th, 
+.skills-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.skills-table thead tr {
+    background-color: #1e3a8a;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.skills-table tbody tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+.skills-table tbody tr:hover {
+    background-color: #f1f5f9;
+    cursor: pointer;
+}
+
+.site-footer {
+    background-color: #0f172a; 
+    color: #94a3b8;           
+    text-align: center;        
+    padding: 20px;
+    margin-top: 50px;
+    font-size: 14px;
+}

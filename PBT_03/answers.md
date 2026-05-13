@@ -85,6 +85,22 @@ Kết quả: Element sẽ có Màu đen (black).
 Giải thích: * Từ khóa !important không thuộc thang tính điểm Specificity thông thường mà nó là một chỉ thị đặc biệt, thiết lập mức độ ưu tiên tối cao trong CSS.
     Nó sẽ ghi đè lên mọi rule khác (kể cả ID selector có điểm cao như Rule C hay thậm chí là thuộc tính style màu cam ở câu trên). Do đó, Rule A giành chiến thắng.
 **PHẦN B — THỰC HÀNH CODE**
+**CÂU B1 — Style trang Profile— Box Model Lab**
+1. Element Selector (Bộ chọn thẻ):
+   Mã nguồn: `body { ... }` hoặc `* { ... }` hoặc `section { ... }`
+   Mục tiêu: Chọn trực tiếp tất cả các thẻ cùng loại trên toàn bộ trang web để gán các thuộc tính chung cấu trúc.
+2. Class Selector (Bộ chọn lớp):
+   Mã nguồn: `.nav-link { ... }` hoặc `.skills-table { ... }`
+   Mục tiêu: Áp dụng kiểu dáng thiết kế đồng bộ cho một nhóm các phần tử có cùng bản chất hành vi giao diện (ví dụ: các thẻ liên kết điều hướng).
+3. ID Selector (Bộ chọn định danh):
+   Mã nguồn: `#main-header { ... }`
+   Mục tiêu: Nhắm mục tiêu duy nhất, độc bản vào khối tiêu đề lớn ở đầu trang để triển khai dải màu nền dạng gradient đặc thù.
+4. **Descendant Selector (Bộ chọn con cháu/phụ thuộc):**
+   Mã nguồn: `.skills-table thead tr { ... }` hoặc `section h2 { ... }`
+   Mục tiêu: Đi sâu vào cấu trúc tầng, chỉ chọn các dòng `tr` nằm bên trong khối tiêu đề `thead` của riêng bảng có class `.skills-table`, giữ tính cô lập giao diện cực tốt.
+5. -class Selector (Bộ chọn giả lập trạng thái):
+   Mã nguồn: `.nav-link:hover { ... }` và `.skills-table tbody tr:nth-child(even) { ... }`
+   Mục tiêu: Xử lý tương tác động (khi người dùng rê chuột qua liên kết/dòng) hoặc thực thi giải thuật CSS để tô màu xen kẽ tự động cho các dòng dữ liệu.
 **CÂU B2 — Box Model Lab**
 PHẦN 1 — CHỨNG MINH CONTENT-BOX VS BORDER-BOX
 
