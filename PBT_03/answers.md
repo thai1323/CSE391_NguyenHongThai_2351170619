@@ -41,6 +41,19 @@ Kết quả dự đoán các phần tử được chọn từ đoạn mã HTML m
 
 8. .top-bar.dark h1 → Chọn: ShopTLU
 **Câu A3 — Box Model — Tính toán kích thước**
+1. Trường hợp 1: content-box (Mặc định)
+Chiều rộng hiển thị (bề rộng của khung hộp thực tế): Width + Padding L/R + Border L/R = 400px + (20px x 2) + (5px x 2) = 450px
+Không gian chiếm trên trang (bề rộng chiếm dụng bao gồm cả khoảng cách an toàn): Chiều rộng hiển thị + Margin L/R = 450px + (10px x 2) = 470px
+2. Trường hợp 2: border-box
+Chiều rộng hiển thị (bề rộng của khung hộp thực tế): Bằng đúng giá trị width khai báo
+Kích thước content thực tế (vùng chứa nội dung chữ/ảnh phía trong): Width khai báo - Padding L/R - Border L/R = 400px - (20px x 2) - (5px x 2) = 350px
+Không gian chiếm trên trang: Chiều rộng hiển thị + Margin L/R = 400px + (10px x 2) = 420px.
+3. Trường hợp 3: Margin collapse (Sụp đổ lề)
+Khoảng cách giữa box-a và box-b: 40px
+Giải thích tại sao KHÔNG PHẢI 65px:
+Khi hai phần tử khối (Block-level) xếp chồng lên nhau theo chiều dọc, lề dọc (margin-top và margin-bottom) của chúng sẽ bị sụp đổ (Margin collapse) thành một khoảng lề duy nhất. Trình duyệt sẽ so sánh và lấy giá trị margin dương lớn nhất của một trong hai làm khoảng cách chung (ở đây max(25px, 40px) = 40px), chứ không cộng dồn lại với nhau.
+Nâng cao (Nếu box-a có margin-bottom: -10px và box-b có margin-top: 40px):Khoảng cách = 30px
+Giải thích: Quy tắc sụp đổ lề khi có sự xuất hiện của margin âm: Khoảng cách cuối cùng được tính bằng cách lấy margin dương lớn nhất cộng với margin âm nhỏ nhất ở đây 40px + -10px = 30px.
 **CÂU A4 — SPECIFICITY**
 1. Tính Specificity Score (a, b, c) cho mỗi Rule
 Công thức tính điểm ưu tiên (a, b, c) được quy ước như sau:
