@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Grid Layout - TLU Shop</title>
+    <link rel="stylesheet" href="grid.css">
+</head>
+<body>
+
+    <div class="shop-grid-container">
+        
+        <header class="shop-header">
+            <div class="logo">TLU-Mart</div>
+            <div class="search-bar"><input type="text" placeholder="Tìm kiếm sản phẩm công nghệ..."></div>
+            <div class="user-menu">🛒 Giỏ hàng | 👤 Tài khoản</div>
+        </header>
+
+        <section class="shop-hero">
+            <div class="hero-content">
+                <h2>SIÊU SALE MÙA HÈ - K65 TLU</h2>
+                <p>Giảm giá lên đến 50% cho tất cả thiết bị công nghệ hỗ trợ học tập.</p>
+                <button class="btn-shop">Mua Ngay</button>
+            </div>
+        </section>
+
+        <aside class="shop-sidebar">
+            <h3>Bộ lọc tìm kiếm</h3>
+            <div class="filter-group">
+                <h4>Danh mục</h4>
+                <label><input type="checkbox" checked> Laptop Gaming</label>
+                <label><input type="checkbox"> MacBook Air/Pro</label>
+                <label><input type="checkbox"> Linh kiện PC</label>
+            </div>
+            <div class="filter-group">
+                <h4>Khoảng giá</h4>
+                <label><input type="radio" name="price"> Dưới 10 triệu</label>
+                <label><input type="radio" name="price" checked> 10 - 25 triệu</label>
+                <label><input type="radio" name="price"> Trên 25 triệu</label>
+            </div>
+        </aside>
+
+        <main class="shop-main">
+            <h3>Danh sách sản phẩm</h3>
+            
+            <div class="product-subgrid">
+                <div class="product-card featured-product">
+                    <span class="badge">NỔI BẬT</span>
+                    <div class="prod-img">💻</div>
+                    <div class="prod-info">
+                        <h4>ASUS ROG Strix G16 (2026)</h4>
+                        <p class="desc">Cấu hình khủng hoảng cực đại chuyên dụng cho Sinh viên Công nghệ thông tin làm đồ án, lập trình hệ thống nặng và giả lập Docker mượt mà.</p>
+                        <p class="price">32.490.000đ <span class="old-price">38.000.000đ</span></p>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="prod-img">💻</div>
+                    <h4>Dell Inspiron 14</h4>
+                    <p class="price">14.500.000đ</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="prod-img">⌨️</div>
+                    <h4>Bàn phím cơ TLU</h4>
+                    <p class="price">1.200.000đ</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="prod-img">🖱️</div>
+                    <h4>Chuột Logitech G502</h4>
+                    <p class="price">1.550.000đ</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="prod-img">📱</div>
+                    <h4>iPhone 15 Pro Max</h4>
+                    <p class="price">29.990.000đ</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="prod-img">🎧</div>
+                    <h4>Tai nghe Sony XM5</h4>
+                    <p class="price">6.800.000đ</p>
+                </div>
+            </div>
+        </main>
+
+        <aside class="shop-ads">
+            <div class="ads-banner">
+                <p>QUẢNG CÁO</p>
+                <div class="image-placeholder">
+                    <span>Khóa học<br>Fullstack Laravel<br>Docker TLU 🚀</span>
+                </div>
+            </div>
+        </aside>
+
+        <footer class="shop-footer">
+            <p>&copy; 2026 TLU-Mart - Hệ thống bài tập lớn Kỹ thuật Phần mềm. Toàn quyền bảo lưu.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
