@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Positioning Playground - TLU</title>
+    <link rel="stylesheet" href="positioning.css">
+</head>
+<body>
+
+    <header class="fixed-header">
+        <div class="logo">ShopTLU</div>
+        <nav class="nav-links">
+            <a href="#">Trang chủ</a>
+            <a href="#">Sản phẩm</a>
+            <a href="#">Liên hệ</a>
+        </nav>
+    </header>
+
+    <div class="main-layout">
+        
+        <aside class="sticky-sidebar">
+            <h3>Danh mục</h3>
+            <ul>
+                <li><a href="#">Laptop Sinh Viên</a></li>
+                <li><a href="#">MacBook Giá Rẻ</a></li>
+                <li><a href="#">Phụ kiện TLU</a></li>
+                <li><a href="#">Đồ chơi Công nghệ</a></li>
+            </ul>
+        </aside>
+
+        <main class="content-area">
+            <h2>Sản phẩm nổi bật</h2>
+            <div class="product-grid">
+                
+                <div class="product-card">
+                    <span class="badge-hot">HOT</span>
+                    <div class="product-img">💻</div>
+                    <h4>MacBook Air M2</h4>
+                    <p class="price">24.990.000đ</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-img">📱</div>
+                    <h4>iPhone 15 Pro</h4>
+                    <p class="price">27.490.000đ</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-img">🎧</div>
+                    <h4>AirPods Max</h4>
+                    <p class="price">12.500.000đ</p>
+                </div>
+            </div>
+
+            <div class="scroll-filler">
+                <p>--- Cuộn xuống nữa để kiểm tra tính năng Fixed và Sticky ---</p>
+                <div class="spacer"></div>
+                <p>Bạn đã cuộn xuống giữa trang! Hãy chú ý Sidebar vẫn đang "dính" chạy theo, còn Header thì luôn cố định ở đỉnh màn hình.</p>
+                <div class="spacer"></div>
+                <p>--- Cuối trang web ---</p>
+            </div>
+        </main>
+    </div>
+
+    <button class="scroll-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</button>
+
+</body>
+</html>
