@@ -62,3 +62,29 @@ Sơ đồ bố cục:
 +-------------------------------------------------------+
 |  [  Item 7  ]   |   (để trống)     |   (để trống)     |
 +-------------------------------------------------------+
+**PHẦN C — DEBUG & SUY LUẬN**
+**Câu C1 — Flexbox vs Grid: Khi nào dùng gì?**
+1. Navigation bar ngang (Logo + Menu + Buttons)
+Lựa chọn: Flexbox
+
+Giải thích ngắn gọn: Thanh điều hướng là layout 1 chiều (1D) theo trục ngang. Flexbox xử lý cực tốt việc căn chỉnh các phần tử không có kích thước cố định, cho phép logo nằm bên trái và đẩy cụm menu/buttons sang bên phải rất linh hoạt bằng thuộc tính justify-content: space-between.
+
+2. Lưới ảnh Instagram (3 cột đều nhau, số ảnh không biết trước)
+Lựa chọn: Grid
+
+Giải thích ngắn gọn: Đây là layout 2 chiều (2D) yêu cầu kiểm soát chặt chẽ cả hàng và cột để tạo thành các ô vuông đều chằn chặn. Với Grid, chỉ cần thiết lập grid-template-columns: repeat(3, 1fr); và grid-auto-rows, trình duyệt sẽ tự động xếp toàn bộ số lượng ảnh phát sinh vào lưới 3 cột một cách hoàn hảo mà không lo bị lệch hàng.
+
+3. Layout blog: Main content + Sidebar
+Lựa chọn: Dùng Flexbox hoặc Grid đều được (Ưu tiên Grid cho cấu trúc tổng thể)
+
+Giải thích ngắn gọn: Layout trang chính mang tính chất cấu trúc khung lớn 2 chiều (vừa chia cột cho nội dung/sidebar, vừa chia hàng cho Header/Footer bao ngoài). Grid giúp khóa cứng độ rộng của Sidebar (ví dụ: 300px) và cho phép Content co giãn tự do theo khoảng trống còn lại (1fr) một cách trực quan nhất.
+
+4. Footer với 4 cột thông tin
+Lựa chọn: Flexbox (Hoặc Grid nếu muốn các cột bằng khít nhau tuyệt đối)
+
+Giải thích ngắn gọn: Bản chất các cột footer thường chỉ xếp hàng ngang cạnh nhau (1 chiều). Dùng Flexbox với display: flex và justify-content: space-between (hoặc đặt flex: 1 cho các cột con) giúp các khối thông tin tự động dàn đều, co giãn mượt mà và dễ dàng chuyển sang dạng dọc (stack) trên màn hình điện thoại bằng flex-direction: column.
+
+5. Card sản phẩm (Ảnh trên, text giữa, nút dưới — nút luôn dính đáy)
+Lựa chọn: Flexbox
+
+Giải thích ngắn gọn: Đây là layout theo chiều dọc (1 chiều). Khi bọc toàn bộ card bằng display: flex; flex-direction: column;, ta chỉ cần gán thêm thuộc tính lề tự động margin-top: auto; cho nút bấm ở dưới cùng. Cơ chế của Flexbox sẽ tự động đẩy nút bấm lao xuống dính chặt vào đáy card, bất kể phần mô tả text ở giữa ngắn hay dài.
