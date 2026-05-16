@@ -79,3 +79,64 @@ Màn hình 1000px: Chiều rộng .container là 960px
     Giải thích: Kích thước này lớn hơn mốc 992px nhưng vẫn nằm dưới mốc giới hạn kế tiếp là 1200px. Vì vậy, phần tử sẽ nhận giá trị thuộc tính nằm trong vùng điều kiện của mốc @media (min-width: 992px).
 Màn hình 1400px: Chiều rộng .container là 1140px
     Giải thích: Đây là màn hình kích thước lớn, thỏa mãn toàn bộ các mốc điều kiện đã khai báo. Câu lệnh cuối cùng @media (min-width: 1200px) nằm ở vị trí dưới cùng trong file CSS nên nó giữ quyền ưu tiên cao nhất, quyết định độ rộng cố định cuối cùng của phần tử là 1140px.
+**Câu A4 — SCSS Basics**
+1. 4 tính năng chính của SCSS và ví dụ
+Variables (Biến số)
+    Giải thích: Cho phép lưu trữ các giá trị thường xuyên tái sử dụng (như mã màu, font chữ, kích thước margin/padding) vào một tên biến bắt đầu bằng dấu $. Khi cần thay đổi giao diện, bạn chỉ cần sửa giá trị tại một nơi duy nhất.
+    Ví dụ:
+        $primary-color: #2563eb;
+        $font-base: 16px;
+
+        button {
+           background-color: $primary-color;
+           font-size: $font-base;
+        }
+Nesting (Viết lồng nhau)
+    Giải thích: Cho phép viết các bộ chọn CSS lồng vào nhau theo đúng cấu trúc hình cây của phân cấp HTML. Tính năng này giúp code gọn gàng hơn, tránh việc phải lặp đi lặp lại thẻ cha bên ngoài và dễ quản lý.
+    Ví dụ:
+        .navbar {
+            background-color: #fff;
+            .nav-links {
+                display: flex;
+                a {
+                color: #333;
+                &:hover { color: blue; } // Ký tự & đại diện cho chính thẻ a
+                }
+            }
+        }
+Mixins (@mixin và @include)
+    Giải thích: Là các hàm dùng để đóng gói một nhóm các thuộc tính CSS lại với nhau, có khả năng truyền tham số (biến số) vào bên trong. Khi muốn tái sử dụng ở block khác, chỉ cần dùng lệnh @include.
+    Ví dụ:
+    @mixin flex-center($direction: row) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+.hero {
+    @include flex-center(column); // Gọi mixin và truyền tham số dọc
+}
+@extend / Inheritance (Kế thừa)
+    Giải thích: Cho phép một bộ chọn CSS thừa hưởng (sao chép lại) toàn bộ các thuộc tính đã được định nghĩa của một bộ chọn khác. Trình duyệt khi biên dịch ra file CSS sẽ gộp các bộ chọn này lại với nhau thành một nhóm để tối ưu dung lượng file.
+    Ví dụ:
+    .btn-base {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-success {
+    @extend .btn-base; // Kế thừa toàn bộ thuộc tính của .btn-base
+    background-color: green;
+}
+2. Tại sao trình duyệt KHÔNG đọc được file .scss? Cần bước gì để chuyển đổi?
+Lý do: 
+    Bản chất các trình duyệt web (như Chrome, Safari, Edge) chỉ được lập trình để hiểu và thông dịch mã nguồn CSS chuẩn (Vanilla CSS). Định dạng .scss chứa các cú pháp nâng cao (biến, lồng nhau, hàm...) nằm ngoài đặc tả kỹ thuật của W3C dành cho trình duyệt, nên nếu liên kết trực tiếp file .scss vào HTML, trình duyệt sẽ báo lỗi hoặc bỏ qua hoàn toàn.
+Bước chuyển đổi (Biên dịch - Compilation):
+    Để chạy được, bạn cần trải qua một bước gọi là Pre-processing (Tiền xử lý/Biên dịch) để dịch toàn bộ file .scss thành file .css thông thường.
+Cách thực hiện thực tế: Bạn cần cài đặt và sử dụng các công cụ biên dịch như:
+    Extension Live Sass Compiler ngay trong VS Code (phổ biến nhất khi học).
+    Các gói lệnh Node.js như Sass (Dart Sass) chạy qua Terminal.
+    Các công cụ đóng gói tự động trong dự án lớn như Vite, Webpack, hoặc Gulp.
+    
