@@ -1,0 +1,247 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8fafc;
+    color: #1e293b;
+   
+    font-size: 14px; 
+}
+
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+.main-header {
+    background-color: #0f172a;
+    color: #ffffff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #38bdf8;
+}
+
+
+.menu-checkbox {
+    display: none;
+}
+
+.hamburger-btn {
+    font-size: 24px;
+    cursor: pointer;
+    display: block; 
+}
+
+
+.nav-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #1e293b;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.nav-menu a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 15px 20px;
+    border-bottom: 1px solid #334155;
+}
+
+
+.menu-checkbox:checked ~ .nav-menu {
+    display: flex;
+}
+
+/* --- Layout chính trên Mobile --- */
+.page-container {
+    padding: 15px;
+    display: block; /* Xếp dọc tuần tự */
+}
+
+
+.sidebar {
+    display: none;
+}
+
+.ads-bar {
+    display: none;
+}
+
+
+.product-area h2 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr; 
+    grid-gap: 20px;
+}
+
+.product-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+}
+
+.img-container {
+    background-color: #f1f5f9;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.product-card h4 {
+    margin: 10px 0 5px;
+    font-size: 1.1rem;
+}
+
+.price {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+
+.main-footer {
+    background-color: #0f172a;
+    color: #94a3b8;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+}
+
+
+@media (min-width: 768px) {
+    body {
+        font-size: 15px; /* Tăng kích cỡ chữ */
+    }
+
+  
+    .hamburger-btn {
+        display: none;
+    }
+
+    .nav-menu {
+        display: flex !important;
+        position: static;
+        flex-direction: row;
+        background-color: transparent;
+        width: auto;
+    }
+
+    .nav-menu a {
+        padding: 0 15px;
+        border-bottom: none;
+    }
+
+
+    .page-container {
+        display: flex;
+        flex-direction: column; 
+        gap: 20px;
+    }
+
+    
+    .sidebar {
+        display: block;
+        background-color: #ffffff;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+    }
+
+    .filter-box {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .filter-box h4 { margin: 0; }
+
+   
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    
+    .ads-bar {
+        display: none;
+    }
+}
+
+
+@media (min-width: 1024px) {
+    body {
+        font-size: 16px; 
+    }
+
+    .page-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 15px;
+        
+        
+        display: grid;
+        grid-template-columns: 250px 1fr 200px;
+        grid-gap: 25px;
+    }
+
+    
+    .sidebar {
+        height: fit-content;
+    }
+
+    .filter-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+   
+    .ads-bar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .ad-box {
+        background-color: #fef08a;
+        border: 2px dashed #ca8a04;
+        color: #854d0e;
+        padding: 20px 15px;
+        text-align: center;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+}
