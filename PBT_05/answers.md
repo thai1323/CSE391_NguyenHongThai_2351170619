@@ -49,3 +49,22 @@ body {
 Tối ưu hóa hiệu năng (Performance): Thiết bị di động có cấu hình phần cứng yếu và tốc độ mạng 3G/4G/5G thường kém ổn định hơn máy tính cắm dây LAN. Viết code Mobile-First giúp trình duyệt di động tải ít code CSS nhất, bỏ qua các hiệu ứng nặng (như hover, hiệu ứng 3D chuyển động nặng của desktop), giúp trang web tải cực nhanh trên điện thoại.
 Xu hướng thiết kế hiện đại (UX/UI): Ngày nay, lượng người dùng lướt web bằng điện thoại di động chiếm từ 60% - 80% tổng lượng truy cập toàn cầu. Thiết kế giao diện gọn gàng cho màn hình nhỏ giúp lập trình viên chắt lọc được những nội dung tinh túy và quan trọng nhất của dịch vụ.
 Ưu tiên từ Google (SEO): Google áp dụng thuật toán Mobile-First Indexing. Nghĩa là Google sẽ dùng giao diện phiên bản di động của trang web để thu thập dữ liệu và đánh giá thứ bạng xếp hạng trên thanh tìm kiếm. Web không chuẩn mobile sẽ bị tụt hạng thê thảm.
+**Câu A1 — Breakpoints**
+Mức mặc định (Extra small - xs): Kích thước dưới 576px
+    Thiết bị đại diện: Điện thoại di động dọc (iPhone 13/14/15, Samsung Galaxy...).
+    Số cột hiển thị: 1 cột. Các card sản phẩm xếp chồng dọc, tràn viền màn hình để người dùng dễ lướt bằng một ngón tay.
+Mức nhỏ (Small - sm): Kích thước từ 576px đến dưới 768px
+    Thiết bị đại diện: Điện thoại di động xoay ngang hoặc máy tính bảng cỡ nhỏ (iPad Mini cỡ cũ).
+    Số cột hiển thị: 2 cột. Tận dụng không gian bề ngang bắt đầu rộng ra để tăng mật độ hiển thị.
+Mức trung bình (Medium - md): Kích thước từ 768px đến dưới 992px
+    Thiết bị đại diện: Máy tính bảng hướng dọc (iPad Air, iPad Pro 11"...).
+    Số cột hiển thị: 2 hoặc 3 cột (Chọn 2 cột nếu trang web có thanh Sidebar bộ lọc ở bên cạnh, chọn 3 cột nếu trang chỉ hiển thị toàn sản phẩm).
+Mức lớn (Large - lg): Kích thước từ 992px đến dưới 1200px
+    Thiết bị đại diện: Máy tính bảng nằm ngang, Laptop màn hình nhỏ (MacBook Air 13").
+    Số cột hiển thị: 3 hoặc 4 cột. Đây là không gian lý tưởng nhất cho các lưới bán hàng e-commerce tiêu chuẩn.
+Mức rất lớn (Extra large - xl): Kích thước từ 1200px đến dưới 1400px
+    Thiết bị đại diện: Màn hình máy tính để bàn (Desktop), Laptop cỡ lớn (15.6" - 16").
+    Số cột hiển thị: 4 cột. Đảm bảo giao diện thông thoáng, hiển thị đầy đủ chi tiết sản phẩm.
+Mức siêu lớn (Extra extra large - xxl): Kích thước từ 1400px trở lên
+    Thiết bị đại diện: Màn hình PC kích thước lớn, độ phân giải cao hoặc màn hình siêu rộng (Ultrawide).
+    Số cột hiển thị: 5 hoặc 6 cột. Việc tăng số cột giúp bao phủ hết các khoảng trống dư thừa và giữ cho các card sản phẩm không bị kéo giãn quá to làm vỡ layout.
