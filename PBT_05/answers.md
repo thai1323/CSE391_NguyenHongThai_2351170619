@@ -146,7 +146,7 @@ Nếu hệ thống máy tính cài đặt sẵn công cụ Dart Sass qua Node.js
 ```bash
 sass scss/style.scss style.css
 **PHẦN C — PHÂN TÍCH**  
-**Bài B3 — Phân tích trang web thực** 
+**Câu C1 — Phân tích trang web thực** 
 1. Giao diện trên 3 kích thước màn hình & Phân tích cấu trúc
 Mốc 1: Mobile
 Phân tích chi tiết:
@@ -178,3 +178,156 @@ Lưới Content (Bố cục dòng tin): Layout mở bung tối đa thành cấu 
 Thành phần xuất hiện lại: Xuất hiện đầy đủ hệ thống quảng cáo hai bên rìa trang web. Khối tiện ích trực quan (Thời tiết, Giá vàng, Chứng khoán) hiển thị đầy đủ ngay trên thanh header.
 
 Kích thước chữ (Font-size): Chữ tiêu đề lớn nhất đạt mốc 28px - 32px, chữ nội dung rõ ràng (16px), khoảng cách thông thoáng.
+**Câu C2 — Thiết kế Responsive Strategy** 
+1. Bản vẽ Wireframe Bố cục
+MÀN HÌNH MOBILE
++---------------------------------------+
+|  HEADER [Logo]             [Menu ☰]   |
++---------------------------------------+
+|                                       |
+|  HERO IMAGE (Ảnh toàn màn hình)       |
+|                                       |
++---------------------------------------+
+|  GRID 6 ẢNH MÓN ĂN                    |
+|  [Ảnh 1]                              |
+|  [Ảnh 2]                              |
+|  ... (Xếp dọc thành 1 cột xoay vòng)  |
++---------------------------------------+
+|  FORM ĐẶT BÀN (Chiếm trọn 1 cột)      |
+|  [Ngày / Giờ / Số người / Ghi chú]   |
+|  [Nút Đặt Bàn Ngay]                   |
++---------------------------------------+
+|  BẢN ĐỒ GOOGLE MAPS (Tràn viền)       |
++---------------------------------------+
+|  FOOTER                               |
++---------------------------------------+
+MÀN HÌNH TABLET
++-------------------------------------------------------+
+|  HEADER [Logo]                        [SĐT: 1900xxxx] |
++-------------------------------------------------------+
+|                                                       |
+|  HERO IMAGE (Chiều cao thu gọn lại vừa tầm mắt)       |
+|                                                       |
++-------------------------------------------------------+
+|  GRID ẢNH MÓN ĂN (Chia thành 3 cột đều)                |
+|  [ Ảnh 1 ]          [ Ảnh 2 ]          [ Ảnh 3 ]      |
+|  [ Ảnh 4 ]          [ Ảnh 5 ]          [ Ảnh 6 ]      |
++-------------------------------------------------------+
+|  FORM ĐẶT BÀN (Bao phủ toàn bộ chiều ngang)           |
+|  [Ngày] [Giờ] [Số người] [Ghi chú...] [Nút Đặt]       |
++-------------------------------------------------------+
+|  BẢN ĐỒ GOOGLE MAPS (Hiển thị cố định dạng hộp lớn)    |
++-------------------------------------------------------+
+|  FOOTER                                               |
++-------------------------------------------------------+
+MÀN HÌNH DESKTOP
++-------------------------------------------------------------------------+
+|  HEADER [Logo]                                          [SĐT: 1900xxxx] |
++-------------------------------------------------------------------------+
+|                                                                         |
+|  HERO IMAGE (Banner rộng, có slogan chào mừng)                           |
+|                                                                         |
++-------------------------------------------------------------------------+
+|  [CỘT TRÁI: NỘI DUNG CHÍNH (70%)]    |  [CỘT PHẢI: SIDEBAR CỐ ĐỊNH (30%)]|
+|                                      |                                   |
+|  GRID ẢNH MÓN ĂN (Chia 2 cột nhỏ)     |  +-----------------------------+  |
+|  [  Ảnh 1  ]      [  Ảnh 2  ]        |  | FORM ĐẶT BÀN                 |  |
+|  [  Ảnh 3  ]      [  Ảnh 4  ]        |  | [Ngày] [Giờ] [Số người]      |  |
+|  [  Ảnh 5  ]      [  Ảnh 6  ]        |  | [Nút Đặt Bàn Ngay]           |  |
+|                                      |  +-----------------------------+  |
+|                                      |  | BẢN ĐỒ GOOGLE MAPS          |  |
+|                                      |  |                             |  |
+|                                      |  +-----------------------------+  |
++-------------------------------------------------------------------------+
+|  FOOTER (Trải dài hết biên ngang)                                       |
++-------------------------------------------------------------------------+
+2. Mã nguồn CSS Skeleton (Grid + Media Queries Mobile-First)
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header .phone {
+    display: none; 
+}
+
+
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+}
+
+
+.booking-form, .map-embed {
+    width: 100%;
+}
+
+
+@media (min-width: 768px) {
+    .header .phone {
+        display: block; 
+    }
+
+   
+    .image-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .booking-form form {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+}
+
+
+@media (min-width: 1024px) {
+  
+    .main-layout {
+        max-width: 1200px;
+        margin: 0 auto;
+        
+     
+        display: grid;
+        grid-template-columns: 7fr 3fr; 
+        grid-gap: 30px;
+    }
+
+    
+    .header, .hero-section, .footer {
+        grid-column: span 2; 
+    }
+
+    
+    .image-grid {
+        grid-column: 1;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    
+    .sidebar-wrapper {
+        grid-column: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .booking-form form {
+        flex-direction: column; 
+    }
+}
