@@ -139,4 +139,9 @@ Cách thực hiện thực tế: Bạn cần cài đặt và sử dụng các c�
     Extension Live Sass Compiler ngay trong VS Code (phổ biến nhất khi học).
     Các gói lệnh Node.js như Sass (Dart Sass) chạy qua Terminal.
     Các công cụ đóng gói tự động trong dự án lớn như Vite, Webpack, hoặc Gulp.
-    
+**PHẦN B — THỰC HÀNH CODE**   
+**Bài B3 — SCSS Refactor** 
+1. Lệnh Biên dịch (Compile) thủ công thông qua Terminal (Command Line):
+Nếu hệ thống máy tính cài đặt sẵn công cụ Dart Sass qua Node.js (npm), câu lệnh thực thi cấu hình xuất bản từ file style.scss ra file style.css nằm ở thư mục gốc như sau:
+```bash
+sass scss/style.scss style.css
