@@ -145,3 +145,36 @@ Cách thực hiện thực tế: Bạn cần cài đặt và sử dụng các c�
 Nếu hệ thống máy tính cài đặt sẵn công cụ Dart Sass qua Node.js (npm), câu lệnh thực thi cấu hình xuất bản từ file style.scss ra file style.css nằm ở thư mục gốc như sau:
 ```bash
 sass scss/style.scss style.css
+**PHẦN C — PHÂN TÍCH**  
+**Bài B3 — Phân tích trang web thực** 
+1. Giao diện trên 3 kích thước màn hình & Phân tích cấu trúc
+Mốc 1: Mobile
+Phân tích chi tiết:
+Navigation (Thanh điều hướng): Menu ngang danh mục (Thời sự, Thế giới, Kinh doanh...) biến mất hoàn toàn. Thay vào đó, một nút Hamburger Menu (☰) xuất hiện ở góc trên cùng bên trái. Khi chạm vào nút này, một danh sách danh mục đầy đủ sẽ trượt từ cạnh bên ra (Sidebar Drawer). Thanh tìm kiếm thu nhỏ lại thành một biểu tượng kính lúp.
+
+Lưới Content (Bố cục dòng tin): Toàn bộ các luồng bài viết chuyển hẳn về 1 cột duy nhất. Ảnh đại diện bài viết nằm trên, tiêu đề nằm dưới hoặc ảnh nằm bên trái và chữ nằm bên phải theo cấu trúc dòng (List layout). Các khối tin phụ xếp chồng dọc tuần tự từ trên xuống dưới.
+
+Thành phần bị ẩn (Hidden Elements): * Toàn bộ các banner quảng cáo lớn hai bên rìa trang web (Ambient Ads) bị ẩn hoàn toàn để tiết kiệm băng thông và diện tích.
+
+Khối "Tiện ích" phụ như: Bảng giá vàng, tỷ giá ngoại tệ, dự báo thời tiết chi tiết bị loại bỏ ở trang chủ.
+
+Các khối bình luận (Comment) mới nhất ở trang ngoài bị ẩn bớt.
+
+Kích thước chữ (Font-size): Font size tiêu đề bài viết lớn giảm xuống (còn khoảng 18px - 20px), khoảng cách dòng (line-height) và khoảng đệm (padding/margin) thu hẹp lại để người dùng đọc được nhiều chữ hơn trên một màn hình đứng.
+Mốc 2: Tablet
+Phân tích chi tiết:Navigation (Thanh điều hướng): Nút hamburger ☰ vẫn được giữ lại để tiết kiệm không gian, tuy nhiên bên cạnh nó đã xuất hiện lại một số danh mục tiêu điểm lớn (Thời sự, Góc nhìn, Video).
+
+Lưới Content (Bố cục dòng tin): Layout chuyển dịch thành 2 cột. Cột bên trái lớn (chiếm khoảng $70\%$ chiều rộng) hiển thị danh sách luồng tin chính. Cột bên phải nhỏ ($30\%$) hiển thị cụm tin tức "Xem nhiều" hoặc các chủ đề thảo luận đang hot.
+
+Thành phần bị ẩn (Hidden Elements): Các banner quảng cáo dọc siêu lớn ở hai bên lề (Background takeover ads) vẫn bị ẩn. Nhưng các ô quảng cáo hình vuông xen kẽ giữa các khối nội dung đã bắt đầu xuất hiện lại.
+
+Kích thước chữ (Font-size): Font size tiêu đề được đẩy nhẹ lên tầm 20px - 22px.
+Mốc 3: Desktop
+Phân tích chi tiết:
+Navigation (Thanh điều hướng): Nút hamburger ẩn đi. Thay vào đó là Thanh Menu ngang đầy đủ phô diễn toàn bộ các danh mục con (Thời sự, Thế giới, Pháp luật, Thể thao, Giáo dục...). Có menu Dropdown (thả xuống) khi di chuột qua để hiển thị tiểu mục sâu hơn.
+
+Lưới Content (Bố cục dòng tin): Layout mở bung tối đa thành cấu trúc 3 cột hoặc 4 cột (Tùy phân đoạn trang). Tin tiêu điểm (Hot news) chiếm diện tích lớn nhất ở trung tâm, bao quanh là các khối cột phụ chia theo chuyên mục riêng biệt độc lập.
+
+Thành phần xuất hiện lại: Xuất hiện đầy đủ hệ thống quảng cáo hai bên rìa trang web. Khối tiện ích trực quan (Thời tiết, Giá vàng, Chứng khoán) hiển thị đầy đủ ngay trên thanh header.
+
+Kích thước chữ (Font-size): Chữ tiêu đề lớn nhất đạt mốc 28px - 32px, chữ nội dung rõ ràng (16px), khoảng cách thông thoáng.
