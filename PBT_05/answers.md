@@ -49,7 +49,7 @@ body {
 Tối ưu hóa hiệu năng (Performance): Thiết bị di động có cấu hình phần cứng yếu và tốc độ mạng 3G/4G/5G thường kém ổn định hơn máy tính cắm dây LAN. Viết code Mobile-First giúp trình duyệt di động tải ít code CSS nhất, bỏ qua các hiệu ứng nặng (như hover, hiệu ứng 3D chuyển động nặng của desktop), giúp trang web tải cực nhanh trên điện thoại.
 Xu hướng thiết kế hiện đại (UX/UI): Ngày nay, lượng người dùng lướt web bằng điện thoại di động chiếm từ 60% - 80% tổng lượng truy cập toàn cầu. Thiết kế giao diện gọn gàng cho màn hình nhỏ giúp lập trình viên chắt lọc được những nội dung tinh túy và quan trọng nhất của dịch vụ.
 Ưu tiên từ Google (SEO): Google áp dụng thuật toán Mobile-First Indexing. Nghĩa là Google sẽ dùng giao diện phiên bản di động của trang web để thu thập dữ liệu và đánh giá thứ bạng xếp hạng trên thanh tìm kiếm. Web không chuẩn mobile sẽ bị tụt hạng thê thảm.
-**Câu A1 — Breakpoints**
+**Câu A2 — Breakpoints**
 Mức mặc định (Extra small - xs): Kích thước dưới 576px
     Thiết bị đại diện: Điện thoại di động dọc (iPhone 13/14/15, Samsung Galaxy...).
     Số cột hiển thị: 1 cột. Các card sản phẩm xếp chồng dọc, tràn viền màn hình để người dùng dễ lướt bằng một ngón tay.
@@ -68,3 +68,14 @@ Mức rất lớn (Extra large - xl): Kích thước từ 1200px đến dưới 
 Mức siêu lớn (Extra extra large - xxl): Kích thước từ 1400px trở lên
     Thiết bị đại diện: Màn hình PC kích thước lớn, độ phân giải cao hoặc màn hình siêu rộng (Ultrawide).
     Số cột hiển thị: 5 hoặc 6 cột. Việc tăng số cột giúp bao phủ hết các khoảng trống dư thừa và giữ cho các card sản phẩm không bị kéo giãn quá to làm vỡ layout.
+**Câu A3 — Media Queries**
+Màn hình 375px (iPhone SE): Chiều rộng .container là 100%
+    Giải thích: Kích thước màn hình này nhỏ hơn mốc tối thiểu 576px của tất cả các câu lệnh điều kiện. Do đó, phần tử sẽ không kích hoạt bất kỳ Media Query nào mà giữ nguyên giá trị thuộc tính mặc định được khai báo ban đầu ở ngoài cùng.
+Màn hình 600px: Chiều rộng .container là 540px
+    Giải thích: Kích thước này đã vượt qua mốc 576px nhưng vẫn chưa đạt tới mốc 768px. Trình duyệt sẽ chỉ kích hoạt duy nhất câu lệnh @media (min-width: 576px) và áp dụng độ rộng cố định tương ứng.
+Màn hình 800px: Chiều rộng .container là 720px
+    Giải thích: Màn hình 800px thỏa mãn cả hai điều kiện min-width: 576px và min-width: 768px. Theo quy tắc dòng chảy (Cascade) của CSS, trình duyệt đọc mã nguồn từ trên xuống dưới, câu lệnh nào viết sau sẽ có độ ưu tiên cao hơn, do đó giá trị 720px viết sau sẽ ghi đè hoàn toàn lên giá trị trước đó.
+Màn hình 1000px: Chiều rộng .container là 960px
+    Giải thích: Kích thước này lớn hơn mốc 992px nhưng vẫn nằm dưới mốc giới hạn kế tiếp là 1200px. Vì vậy, phần tử sẽ nhận giá trị thuộc tính nằm trong vùng điều kiện của mốc @media (min-width: 992px).
+Màn hình 1400px: Chiều rộng .container là 1140px
+    Giải thích: Đây là màn hình kích thước lớn, thỏa mãn toàn bộ các mốc điều kiện đã khai báo. Câu lệnh cuối cùng @media (min-width: 1200px) nằm ở vị trí dưới cùng trong file CSS nên nó giữ quyền ưu tiên cao nhất, quyết định độ rộng cố định cuối cùng của phần tử là 1140px.
