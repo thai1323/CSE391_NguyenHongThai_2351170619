@@ -127,3 +127,27 @@ const html = `
     <p>${description}</p>
     <span>Giá: ${price}đ</span>
 </div>`;
+
+# PHẦN C — SUY LUẬN
+# Câu C1 — Debug JavaScript
+## 1. Bảng liệt kê lỗi, giải thích bản chất và cách sửa đổi
+
+| Vị trí dòng lỗi | Mã lỗi gốc | Dự đoán hiện tượng / Bản chất kỹ thuật | Cách sửa đổi chuẩn hóa |
+| :--- | :--- | :--- | :--- |
+| **Lỗi 1 (Logic)** | `if (giaSauGiam = 0)` | **Sai toán tử**: Dấu `=` thực hiện phép gán giá trị khiến `giaSauGiam` bị ép về số `0` (Falsy). Khối lệnh `if` bị vô hiệu hóa hoàn toàn. | Thay thế bằng toán tử so sánh nghiêm ngặt: `if (giaSauGiam === 0)` |
+| **Lỗi 2 (Dữ liệu)** | `tinhGiaGiamGia("100000", 20)` | **Sai kiểu dữ liệu đầu vào**: Truyền chuỗi văn bản `"100000"` thay vì kiểu số. Dễ gây lỗi tính toán nghiêm trọng (`NaN`) về sau. | Truyền số chuẩn: `tinhGiaGiamGia(100000, 20)` và bổ sung kiểm tra `typeof` ở đầu hàm. |
+| **Lỗi 3 (Hiển thị)**| `console.log("Giá: " + gia2)` | **Thiếu logic rẽ nhánh**: Khi hàm trả về chuỗi báo lỗi, câu lệnh ngoài vẫn nối chuỗi vô nghĩa: `"Giá: Phần trăm giảm không hợp lệ"`. | Sử dụng `if (typeof gia2 === "string")` để tách biệt luồng thông báo lỗi và luồng in kết quả. |
+| **Lỗi 4 (Cú pháp)** | `return giaSauGiam` | **Code Smell (Thiếu chuẩn)**: Thiếu các dấu chấm phẩy `;` kết thúc câu lệnh, dễ lỗi cú pháp khi gộp/nén (minify) mã nguồn. | Bổ sung đầy đủ dấu `;` vào cuối mỗi câu lệnh. |
+| **Lỗi 5 (Tối ưu)** | `var giamGia = ...` | **Sai từ khóa biến**: Biến không bao giờ bị tái gán giá trị trong hàm nhưng lại dùng `var` (không có Block Scope, dễ bị hoisted lỗi). | Chuyển đổi sang từ khóa hằng số `const giamGia` để bảo vệ toàn vẹn dữ liệu và tối ưu bộ nhớ. |
+| **Lỗi 6 (Ẩn - Scope)**| `for (var i = 0; ...)` | **Lỗi Closure & Hoisting**: `var` tạo ra đúng 1 biến `i` duy nhất cho toàn vòng lặp. Khi `setTimeout` chạy sau 1 giây, vòng lặp đã kết thúc và `i = 5`. Kết quả bị in ra 5 lần chữ `"Item 5"`. | Thay `var i = 0` bằng `let i = 0` để tạo **Block Scope**, cô lập biến `i` độc lập cho từng lượt lặp của `setTimeout`. |
+
+---
+
+## 2. Phân tích chuyên sâu về Lỗi Ẩn (Vòng lặp `var` kết hợp `setTimeout`)
+
+Hiện tượng in ra 5 lần chữ `Item 5` thay vì chạy từ `0` đến `4` là một trong những chiếc "bẫy" kinh điển nhất về cơ chế quản lý bộ nhớ của JavaScript:
+
+1. **Phạm vi hoạt động của `var`:** Từ khóa `var` chỉ có phạm vi hàm (Function Scope) hoặc toàn cục (Global Scope), nó hoàn toàn phớt lờ cặp dấu ngoặc nhọn `{}` của vòng lặp `for`. Do đó, hệ thống chỉ cấp phát duy nhất **một ô nhớ** để lưu trữ giá trị của biến `i`.
+2. **Bản chất bất đồng bộ của `setTimeout`:** Hàm `setTimeout` không thực thi ngay lập tức mà nó đăng ký một bộ hẹn giờ với Web APIs/Node.js, chờ đúng 1000ms (1 giây) sau mới đẩy hàm callback vào hàng đợi để thực thi.
+3. **Xung đột thời gian:** Trong lúc các hàm `setTimeout` đang xếp hàng chờ đợi, vòng lặp `for` (vốn là đồng bộ - Synchronous) đã chạy xong hoàn toàn với tốc độ mili-giây. Điều kiện dừng khiến giá trị cuối cùng còn sót lại tại ô nhớ của biến `i` là số `5`.
+4. **Cơ chế Closure giải quyết bằng `let`:** Khi ta thay bằng `let i = 0`, từ khóa `let` kích hoạt cơ chế **Block Scope** (Phạm vi khối). Tại mỗi lượt lặp, JavaScript bắt buộc phải tạo ra một **ô nhớ hoàn toàn mới** để nhân bản giá trị `i` tại thời điểm đó. Hàm `setTimeout` sẽ "đóng gói" (Closure) cái ô nhớ riêng biệt này lại. Nhờ vậy, sau 1 giây, khi các hàm callback đồng loạt kích hoạt, chúng tìm về đúng ô nhớ của lượt lặp tương ứng và in ra kết quả chuẩn xác: `Item 0`, `Item 1`, `Item 2`, `Item 3`, `Item 4`.
