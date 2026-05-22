@@ -49,3 +49,31 @@ Sự khác biệt mang tính kinh điển này nằm ở **sự đa năng của 
 
 * **Trường hợp `"5" + 3`:** Do toán tử `+` có hai nhiệm vụ (vừa làm toán cộng, vừa làm nhiệm vụ nối ký tự văn bản). JavaScript có quy tắc tối cao: *Chỉ cần 1 trong 2 vế là chuỗi, vế còn lại bị ép thành chuỗi để nối*. Do đó số `3` biến thành `"3"` và dính liền vào sau `"5"` tạo ra `"53"`.
 * **Trường hợp `"5" - 3`:** Toán tử `-` thì không đa năng như vậy, nó chỉ biết làm duy nhất một việc là làm phép toán trừ. Vì thế, khi thấy chuỗi `"5"`, JavaScript hiểu rằng bạn đang muốn làm toán nên nó ép kiểu số ngầm định (Numeric Coercion) dịch chuyển `"5"` thành số `5`. Phép toán trở thành `5 - 2` và cho ra kết quả bằng `2`.
+
+# CÂU A3 — SO SÁNH == VS ===
+
+## 1. Bảng dự đoán và Kết quả thực tế
+
+| Dòng code | Dự đoán / Kết quả thực tế | Giải thích bản chất cơ chế vận hành ngầm |
+| :--- | :--- | :--- |
+| `5 == "5"` | `true` | **Toán tử so sánh trừu tượng (Loose Equality)**: Ép kiểu chuỗi `"5"` về số `5` trước khi so sánh giá trị ($5 = 5$). |
+| `5 === "5"` | `false` | **Toán tử so sánh nghiêm ngặt (Strict Equality)**: So sánh cả giá trị lẫn kiểu dữ liệu. Vì số (`number`) khác chuỗi (`string`) nên trả về `false`. |
+| `null == undefined` | `true` | Đây là một **quy tắc đặc biệt** trong đặc tả ECMAScript. `null` và `undefined` bằng nhau khi dùng `==` và chúng không bằng bất kỳ giá trị nào khác. |
+| `null === undefined` | `false` | Kiểu dữ liệu của `null` (được định danh là `object` do lỗi lịch sử) hoàn toàn khác biệt với kiểu dữ liệu `undefined`. |
+| `NaN == NaN` | `false` | **Quy tắc đặc biệt**: Giá trị `NaN` (Not-a-Number) là thực thể duy nhất trong JavaScript **không bao giờ tự bằng chính nó**, dù so sánh bằng `==` hay `===`. |
+| `0 == false` | `true` | Giá trị `false` thuộc kiểu Boolean được ép ngầm định về kiểu số là `0`. Phép toán trở thành $0 = 0$, trả về `true`. |
+| `0 === false` | `false` | Kiểu dữ liệu `number` (của số 0) không trùng khớp với kiểu dữ liệu `boolean` (của giá trị false). |
+| `"" == false` | `true` | Cả hai vế đều bị ép kiểu ngầm định về số `0` để thực hiện so sánh trừu tượng ($0 = 0$). |
+
+---
+
+## 2. Quy tắc cốt lõi: Nên sử dụng `==` hay `===` từ giờ trở đi?
+
+### Câu trả lời: Luôn luôn ưu tiên sử dụng toán tử `===` (và `!==`) trong mọi tình huống thực tế.
+
+### Tại sao?
+1. **Tránh bẫy logic (Kịch bản lỗi ngầm):** Như đã thấy ở bảng trên, toán tử `==` tự ý ép kiểu dữ liệu ngầm định theo những quy tắc rất phức tạp và khó kiểm soát (ví dụ như biến `""` hay `[]` thành số `0`). Điều này cực kỳ dễ tạo ra những lỗ hổng logic tinh vi trong hệ thống lớn mà trình duyệt không hề báo lỗi (Crash).
+2. **Đảm bảo tính chính xác và an toàn của dữ liệu:** Sử dụng `===` bắt buộc dữ liệu đầu vào phải trùng khớp hoàn toàn cả về bản chất (Kiểu dữ liệu) lẫn giá trị. Điều này giúp mã nguồn của bạn chạy tường minh, minh bạch, dễ đọc (Readable) và dễ gỡ lỗi (Maintainable).
+3. **Hiệu năng xử lý nhanh hơn (Performance):** Vì toán tử `===` bỏ qua hoàn toàn bước kiểm tra và ép kiểu dữ liệu phức tạp, nó so sánh trực tiếp các byte bộ nhớ nên về mặt lý thuyết, tốc độ xử lý của nó sẽ tối ưu hơn so với `==`.
+
+*Ngoại lệ duy nhất:* Đôi khi lập trình viên dùng `if (variable == null)` để kiểm tra nhanh xem một biến có phải là `null` hoặc `undefined` hay không (vì dòng này tương đương với `if (variable === null || variable === undefined)`). Tuy nhiên, để đảm bảo an toàn tuyệt đối, việc viết tường minh với `===` vẫn được các hệ thống Linting (như ESLint) và các công ty công nghệ lớn quy định bắt buộc.
