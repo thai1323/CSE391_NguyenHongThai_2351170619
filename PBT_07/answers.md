@@ -77,3 +77,36 @@ Sự khác biệt mang tính kinh điển này nằm ở **sự đa năng của 
 3. **Hiệu năng xử lý nhanh hơn (Performance):** Vì toán tử `===` bỏ qua hoàn toàn bước kiểm tra và ép kiểu dữ liệu phức tạp, nó so sánh trực tiếp các byte bộ nhớ nên về mặt lý thuyết, tốc độ xử lý của nó sẽ tối ưu hơn so với `==`.
 
 *Ngoại lệ duy nhất:* Đôi khi lập trình viên dùng `if (variable == null)` để kiểm tra nhanh xem một biến có phải là `null` hoặc `undefined` hay không (vì dòng này tương đương với `if (variable === null || variable === undefined)`). Tuy nhiên, để đảm bảo an toàn tuyệt đối, việc viết tường minh với `===` vẫn được các hệ thống Linting (như ESLint) và các công ty công nghệ lớn quy định bắt buộc.
+
+# CÂU A4 — TRUTHY & FALSY
+
+## 1. Danh sách TẤT CẢ các giá trị Falsy trong JavaScript
+
+Trong JavaScript, **Falsy** là những giá trị mà khi bị ép kiểu về dạng Boolean trong các câu lệnh điều kiện (như `if`, vòng lặp...), chúng sẽ tự động chuyển dịch về giá trị `false`. 
+
+Hiện tại, JavaScript chỉ có chính xác **8 giá trị Falsy** sau đây:
+1. `false` (Chính bản thân từ khóa boolean false).
+2. `0` (Số không).
+3. `-0` (Số âm không).
+4. `0n` (Kiểu BigInt số không).
+5. `""`, `''`, `\`` (Chuỗi văn bản rỗng, hoàn toàn không chứa ký tự nào bên trong).
+6. `null` (Giá trị rỗng/vô giá trị).
+7. `undefined` (Biến chưa được khởi tạo, định nghĩa).
+8. `NaN` (Trạng thái kết quả toán học vô lý - Not-a-Number).
+
+*Lưu ý: Tất cả các giá trị nằm ngoài danh sách 8 thực thể trên thì mặc định đều là **Truthy** (tự động chuyển thành `true` trong câu lệnh `if`).*
+
+---
+
+## 2. Bảng dự đoán và Kết quả thực tế câu lệnh Điều kiện
+
+| Dòng code | Tính chất của vế điều kiện | Dự đoán / Kết quả thực tế | Giải thích bản chất cơ chế |
+| :--- | :--- | :--- | :--- |
+| `if ("0")` | **Truthy** | **CÓ IN** chữ "A" | Đây là một chuỗi văn bản **không rỗng** (chứa ký tự ký hiệu số 0). Bất kỳ chuỗi nào có ký tự đều là Truthy. |
+| `if ("")` | **Falsy** | **KHÔNG IN** | Chuỗi hoàn toàn trống rỗng (String length = 0), thuộc nhóm 8 giá trị Falsy. |
+| `if ([])` | **Truthy** | **CÓ IN** chữ "C" | **Mảng rỗng** vẫn là một Object (kiểu dữ liệu tham chiếu). Mọi Object/Array dù trống rỗng hay không đều luôn là Truthy. |
+| `if ({})` | **Truthy** | **CÓ IN** chữ "D" | **Đối tượng rỗng** tương tự như mảng rỗng, bộ nhớ đã cấp phát một Object nên nó luôn là Truthy. |
+| `if (null)` | **Falsy** | **KHÔNG IN** | Nằm trong danh sách 8 giá trị Falsy mặc định của ngôn ngữ. |
+| `if (0)` | **Falsy** | **KHÔNG IN** | Số không đại diện cho trạng thái tắt/sai cấu trúc, thuộc nhóm Falsy. |
+| `if (-1)` | **Truthy** | **CÓ IN** chữ "G" | Trong JavaScript, chỉ có số `0` và `-0` mới là Falsy. Mọi số nguyên âm hoặc dương khác không (`-1`, `1`, `100`...) đều là Truthy. |
+| `if (" ")` | **Truthy** | **CÓ IN** chữ "H" | Chuỗi này có chứa **1 dấu cách (khoảng trắng/space)** nên nó không phải là chuỗi rỗng. Do đó nó là Truthy. |
