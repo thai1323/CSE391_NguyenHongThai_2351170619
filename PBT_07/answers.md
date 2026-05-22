@@ -110,3 +110,20 @@ Hiện tại, JavaScript chỉ có chính xác **8 giá trị Falsy** sau đây:
 | `if (0)` | **Falsy** | **KHÔNG IN** | Số không đại diện cho trạng thái tắt/sai cấu trúc, thuộc nhóm Falsy. |
 | `if (-1)` | **Truthy** | **CÓ IN** chữ "G" | Trong JavaScript, chỉ có số `0` và `-0` mới là Falsy. Mọi số nguyên âm hoặc dương khác không (`-1`, `1`, `100`...) đều là Truthy. |
 | `if (" ")` | **Truthy** | **CÓ IN** chữ "H" | Chuỗi này có chứa **1 dấu cách (khoảng trắng/space)** nên nó không phải là chuỗi rỗng. Do đó nó là Truthy. |
+
+# Câu A5  — Template Literals
+Viết lại bằng template literal
+
+Cách 1:
+const greeting = `Xin chào ${name}! Bạn ${age} tuổi.`;
+
+Cách 2:
+const url = `https://api.example.com/users/${userId}/orders?page=${page}`;
+
+Cách 3:
+const html = `
+<div class="card">
+    <h2>${title}</h2>
+    <p>${description}</p>
+    <span>Giá: ${price}đ</span>
+</div>`;
