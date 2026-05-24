@@ -1,5 +1,35 @@
 ## PHẦN A — KIỂM TRA ĐỌC HIỂU 
 
+### Câu A3 — Array Methods
+
+Khai báo mảng ban đầu:
+```javascript
+const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+// 1. Lấy các số chẵn (Dùng filter lọc các số chia hết cho 2)
+const evens = nums.filter(x => x % 2 === 0); // → [2, 4, 6, 8, 10]
+
+// 2. Nhân mỗi số với 3 (Dùng map để biến đổi từng phần tử)
+const tripled = nums.map(x => x * 3); // → [3, 6, 9, ..., 30]
+
+// 3. Tính tổng tất cả (Dùng reduce cộng dồn với giá trị khởi tạo bằng 0)
+const totalSum = nums.reduce((sum, x) => sum + x, 0); // → 55
+
+// 4. Tìm số đầu tiên > 7 (Dùng find để lấy phần tử thỏa mãn đầu tiên)
+const firstGreaterThanSeven = nums.find(x => x > 7); // → 8
+
+// 5. Kiểm tra CÓ số nào > 10 không (Dùng some để check điều kiện ít nhất một phần tử)
+const hasGreaterThanTen = nums.some(x => x > 10); // → false
+
+// 6. Kiểm tra TẤT CẢ đều > 0 (Dùng every để cam kết mọi phần tử đều thỏa mãn)
+const allPositive = nums.every(x => x > 0); // → true
+
+// 7. Tạo mảng "Số X là [chẵn/lẻ]" (Dùng map kết hợp Template Literal và toán tử ba ngôi)
+const parityStrings = nums.map(x => `Số ${x} là ${x % 2 === 0 ? "chẵn" : "lẻ"}`); 
+// → ["Số 1 là lẻ", "Số 2 là chẵn", ...]
+
+// 8. Đảo ngược mảng mà không làm biến đổi mảng gốc (Dùng toán tử spread [...] để clone mảng trước khi .reverse())
+const reversedNums = [...nums].reverse(); // → [10, 9, ..., 1]
+
 ### Câu A4 — Object Destructuring & Spread
 ## 1. Kết quả Output dự đoán
 ```javascript
