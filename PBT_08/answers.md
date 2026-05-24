@@ -1,4 +1,55 @@
 ## PHẦN A — KIỂM TRA ĐỌC HIỂU 
+### Câu A1 (5đ) — Function Declaration vs Expression vs Arrow
+
+## 1. Viết cùng 1 hàm theo 3 cú pháp quy định
+
+```javascript
+// Cách 1: Function Declaration (Khai báo hàm truyền thống)
+function tinhThueBaoHiemDeclaration(luong) {
+    const thue = luong > 11000000 ? luong * 0.1 : 0;
+    return { thue, thuc_nhan: luong - thue };
+}
+
+// Cách 2: Function Expression (Biểu thức hàm)
+const tinhThueBaoHiemExpression = function(luong) {
+    const thue = luong > 11000000 ? luong * 0.1 : 0;
+    return { thue, thuc_nhan: luong - thue };
+};
+
+// Cách 3: Arrow Function (Hàm mũi tên ngắn gọn)
+const tinhThueBaoHiemArrow = (luong) => {
+    const thue = luong > 11000000 ? luong * 0.1 : 0;
+    return { thue, thuc_nhan: luong - thue };
+};
+## 2. Giải thích sự khác biệt về Hoisting kèm ví dụ cụ thể
+CÓ, 3 cách này có sự khác biệt rất lớn về cơ chế Hoisting (cơ chế dịch chuyển định nghĩa lên đầu phạm vi mã nguồn trước khi biên dịch).
+
+A. Đối với Function Declaration (Khai báo hàm)
+Đặc điểm: Thừa hưởng cơ chế Full Hoisting. Cả tên hàm và toàn bộ nội dung phần thân hàm đều được đưa lên đỉnh phạm vi.
+
+Hệ quả: Bạn có thể gọi hàm này thoải mái ở những dòng code nằm trước vị trí khai báo thực tế của nó mà không gặp bất kỳ lỗi nào.
+
+// Ví dụ
+console.log(tinhThueBaoHiemDeclaration(15000000)); 
+
+function tinhThueBaoHiemDeclaration(luong) {
+    const thue = luong > 11000000 ? luong * 0.1 : 0;
+    return { thue, thuc_nhan: luong - thue };
+}
+
+B. Đối với Function Expression và Arrow Function
+Đặc điểm: Hai dạng này bản chất là gán hàm vào một biến (được khai báo bằng let hoặc const). Khi biến được hoist, nó sẽ rơi vào vùng chết tạm thời (Temporal Dead Zone - TDZ). Hệ thống biết biến đó tồn tại nhưng cấm truy cập trước khi dòng lệnh gán giá trị được chạy qua.
+
+Hệ quả: Bạn KHÔNG THỂ gọi hàm trước khi khai báo. Nếu cố tình gọi, JavaScript sẽ ném ra lỗi hệ thống ngay lập tức.
+
+// Ví dụ
+console.log(tinhThueBaoHiemArrow(15000000)); 
+// ❌ Lỗi: ReferenceError: Cannot access 'tinhThueBaoHiemArrow' before initialization
+
+const tinhThueBaoHiemArrow = (luong) => {
+    const thue = luong > 11000000 ? luong * 0.1 : 0;
+    return { thue, thuc_nhan: luong - thue };
+};
 
 ### Câu A2 — Scope & Closure
 ## 1. Kết quả Output dự đoán
