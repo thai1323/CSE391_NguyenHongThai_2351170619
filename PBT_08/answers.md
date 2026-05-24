@@ -20,3 +20,74 @@ const mockOrders = [
 
 console.log("=== KẾT QUẢ ĐƠN HÀNG SAU KHI REFACTOR ===");
 console.log(processOrders(mockOrders));
+### Câu C2 — Thiết kế API
+
+const miniArray = {
+    /**
+     * Hàm map: Biến đổi từng phần tử trong mảng theo một hàm callback cho trước
+     * @param {Array} arr - Mảng dữ liệu gốc
+     * @param {Function} fn - Hàm callback xử lý (element, index, originalArray)
+     * @returns {Array} Mảng mới sau khi đã biến đổi
+     */
+    map(arr, fn) {
+        const result = [];
+        for (let i = 0; i < arr.length; i++) {
+            // Đẩy kết quả sau khi chạy hàm fn vào mảng mới
+            result.push(fn(arr[i], i, arr));
+        }
+        return result;
+    },
+
+    /**
+     * Hàm filter: Sàng lọc các phần tử thỏa mãn điều kiện logic của hàm callback
+     * @param {Array} arr - Mảng dữ liệu gốc
+     * @param {Function} fn - Hàm callback kiểm tra (element, index, originalArray) -> Trả về boolean
+     * @returns {Array} Mảng mới chứa các phần tử vượt qua bộ lọc
+     */
+    filter(arr, fn) {
+        const result = [];
+        for (let i = 0; i < arr.length; i++) {
+            // Nếu hàm fn trả về giá trị mang tính chất đúng (truthy)
+            if (fn(arr[i], i, arr)) {
+                result.push(arr[i]);
+            }
+        }
+        return result;
+    },
+
+    /**
+     * Hàm reduce: Tích lũy các phần tử trong mảng thành một giá trị duy nhất
+     * @param {Array} arr - Mảng dữ liệu gốc
+     * @param {Function} fn - Hàm callback tích lũy (accumulator, currentValue, index, originalArray)
+     * @param {any} initialValue - Giá trị khởi tạo ban đầu (Tùy chọn)
+     * @returns {any} Giá trị tích lũy cuối cùng
+     */
+    reduce(arr, fn, initialValue) {
+        // Kiểm tra xem người dùng có truyền tham số thứ 3 (initialValue) hay không
+        const hasInitialValue = initialValue !== undefined;
+        
+        // Nếu có truyền thì biến tích lũy bắt đầu từ initialValue, ngược lại lấy phần tử đầu tiên của mảng [0]
+        let accumulator = hasInitialValue ? initialValue : arr[0];
+        
+        // Nếu không có initialValue, vòng lặp tính toán sẽ bắt đầu từ phần tử thứ hai [1]
+        const startIndex = hasInitialValue ? 0 : 1;
+
+        for (let i = startIndex; i < arr.length; i++) {
+            accumulator = fn(accumulator, arr[i], i, arr);
+        }
+
+        return accumulator;
+    }
+};
+
+
+console.log("=== KIỂM TRA MINIARRAY.MAP ===");
+console.log(miniArray.map([1, 2, 3], x => x * 2));         // Kết quả: [2, 4, 6]
+
+console.log("\n=== KIỂM TRA MINIARRAY.FILTER ===");
+console.log(miniArray.filter([1, 2, 3, 4], x => x > 2));     // Kết quả: [3, 4]
+
+console.log("\n=== KIỂM TRA MINIARRAY.REDUCE (CÓ INITIAL VALUE) ===");
+console.log(miniArray.reduce([1, 2, 3, 4], (a, b) => a + b, 0)); // Kết quả: 10
+
+console.log("\n=== TEST CHUYÊN SÂU: REDUCE KHÔNG TRUYỀN INITIAL VALUE ===");
