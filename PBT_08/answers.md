@@ -1,3 +1,44 @@
+## PHẦN A — KIỂM TRA ĐỌC HIỂU 
+
+### Câu A4 — Object Destructuring & Spread
+## 1. Kết quả Output dự đoán
+```javascript
+const product = {
+    name: "iPhone 16",
+    price: 25990000,
+    specs: { ram: 8, storage: 256, color: "Titan" }
+};
+
+// --- PHẦN DESTRUCTURING ---
+const { name, price, specs: { ram, color } } = product;
+
+console.log(name, price, ram, color);  
+// OUTPUT: iPhone 16 25990000 8 Titan
+
+console.log(specs);                    
+// OUTPUT: ReferenceError: specs is not defined
+
+
+// --- PHẦN SPREAD ---
+const updated = { ...product, price: 23990000, sale: true };
+
+console.log(updated.price);            
+// OUTPUT: 23990000
+
+console.log(updated.sale);             
+// OUTPUT: true
+
+console.log(product.price);            
+// OUTPUT: 25990000 (Giá gốc KHÔNG đổi)
+
+
+// --- PHẦN SPREAD GOTCHA ---
+const copy = { ...product };
+copy.specs.ram = 16;
+
+console.log(product.specs.ram);        
+// OUTPUT: 16 (Giá gốc BỊ THAY ĐỔI từ 8 thành 16)
+
 ## PHẦN C — SUY LUẬN
 ### Câu C1 — Refactor Code
 
@@ -20,6 +61,7 @@ const mockOrders = [
 
 console.log("=== KẾT QUẢ ĐƠN HÀNG SAU KHI REFACTOR ===");
 console.log(processOrders(mockOrders));
+
 ### Câu C2 — Thiết kế API
 
 const miniArray = {
