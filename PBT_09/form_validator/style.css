@@ -1,0 +1,236 @@
+:root {
+    --bg-page: #f1f5f9;
+    --bg-card: #ffffff;
+    --text-main: #1e293b;
+    --text-label: #475569;
+    --border-color: #cbd5e1;
+    --primary: #3b82f6;
+    --primary-disabled: #93c5fd;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --radius: 10px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.form-container {
+    background: var(--bg-card);
+    width: 100%;
+    max-width: 480px;
+    padding: 35px 30px;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 
+                0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.form-subtitle {
+    font-size: 13.5px;
+    color: var(--text-label);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+label {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-label);
+    margin-bottom: 6px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+input {
+    width: 100%;
+    padding: 11px 40px 11px 14px;
+    font-family: inherit;
+    font-size: 14.5px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Biểu tượng trạng thái ✅ ❌ động */
+.status-icon {
+    position: absolute;
+    right: 14px;
+    font-size: 14px;
+    font-weight: bold;
+    user-select: none;
+}
+
+/* Trạng thái lỗi đầu vào */
+.form-group.invalid input {
+    border-color: var(--danger);
+    background-color: #fef2f2;
+}
+.form-group.invalid input:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+/* Trạng thái hợp lệ đầu vào */
+.form-group.valid input {
+    border-color: var(--success);
+    background-color: #f0fdf4;
+}
+
+/* Dòng text báo lỗi ẩn mặc định */
+.error-msg {
+    color: var(--danger);
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}
+
+.form-group.invalid .error-msg {
+    display: block;
+}
+
+/* --- Password Strength Meter CSS --- */
+.strength-meter {
+    height: 5px;
+    width: 100%;
+    background-color: #e2e8f0;
+    border-radius: 3px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-label {
+    font-size: 11.5px;
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+/* --- Nút bấm Đăng ký --- */
+.submit-btn {
+    width: 100%;
+    padding: 13px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+
+.submit-btn:hover:not(:disabled) {
+    background-color: #2563eb;
+}
+
+.submit-btn:disabled {
+    background-color: var(--border-color);
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+/* --- Cấu trúc Popup Modal --- */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: none; /* Ẩn mặc định */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: white;
+    padding: 30px;
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.modal-success-icon {
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+.modal-box h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.modal-box p {
+    font-size: 13px;
+    color: var(--text-label);
+    margin-bottom: 15px;
+}
+
+.modal-summary {
+    background: var(--bg-page);
+    padding: 12px;
+    border-radius: 6px;
+    text-align: left;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.modal-close-btn {
+    padding: 10px 20px;
+    background-color: var(--text-main);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+}
