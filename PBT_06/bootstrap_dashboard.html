@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài B2 — Dashboard Layout Bootstrap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        /* Tối ưu hóa chiều cao tối thiểu cho toàn bộ trang và định vị Sidebar */
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        @media (min-width: 992px) {
+            .sidebar-fixed {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                width: 260px;
+                z-index: 100;
+                overflow-y: auto;
+            }
+            .main-content {
+                margin-left: 260px; /* Đẩy nội dung chính sang phải bằng đúng độ rộng Sidebar */
+            }
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <div class="sidebar-fixed bg-dark text-white d-flex flex-column p-3 collapse d-lg-flex" id="sidebarMenu">
+        <a href="#" class="d-flex align-items-center mb-4 me-md-auto text-white text-decoration-none fs-4 fw-bold text-uppercase border-bottom border-secondary pb-3 w-100">
+            <i class="bi bi-speedometer2 text-info me-2"></i> TechAdmin
+        </a>
+        
+        <div class="list-group list-group-flush w-100 flex-grow-1">
+            <a href="#" class="list-group-item list-group-item-action bg-dark text-white active border-0 py-2.5 rounded mb-1">
+                <i class="bi bi-house-door me-2"></i> Tổng quan
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-dark text-white-50 hover-white border-0 py-2.5 rounded mb-1">
+                <i class="bi bi-cart3 me-2"></i> Quản lý đơn hàng
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-dark text-white-50 border-0 py-2.5 rounded mb-1">
+                <i class="bi bi-box-seam me-2"></i> Sản phẩm
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-dark text-white-50 border-0 py-2.5 rounded mb-1">
+                <i class="bi bi-people me-2"></i> Khách hàng
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-dark text-white-50 border-0 py-2.5 rounded mb-1">
+                <i class="bi bi-graph-up me-2"></i> Báo cáo doanh thu
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-dark text-white-50 border-0 py-2.5 rounded mb-1">
+                <i class="bi bi-gear me-2"></i> Cài đặt hệ thống
+            </a>
+        </div>
+        
+        <div class="border-top border-secondary pt-3 mt-auto w-100">
+            <div class="d-flex align-items-center">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80" alt="Avatar Admin" class="rounded-circle me-2 object-fit-cover" width="35" height="35">
+                <div class="small">
+                    <p class="mb-0 fw-bold text-white lh-sm">Nguyễn Văn A</p>
+                    <span class="text-muted fs-7">Super Admin</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="main-content d-flex flex-column min-vh-100">
+        
+        <header class="navbar navbar-expand bg-white border-bottom shadow-sm px-4 sticky-top">
+            <button class="btn btn-outline-dark d-lg-none me-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <nav aria-label="breadcrumb" class="d-none d-sm-inline-block">
+                <ol class="breadcrumb mb-0 py-1">
+                    <li class="breadcrumb-item small"><a href="#" class="text-decoration-none text-muted">Hệ thống</a></li>
+                    <li class="breadcrumb-item small"><a href="#" class="text-decoration-none text-muted">Quản trị</a></li>
+                    <li class="breadcrumb-item small active text-dark fw-semibold" aria-current="page">Tổng quan Dashboard</li>
+                </ol>
+            </nav>
+
+            <div class="dropdown ms-auto">
+                <button class="btn btn-light dropdown-toggle d-flex align-items-center border" type="button" id="topbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-bell me-2 text-danger"></i>
+                    <span class="d-none d-md-inline small fw-semibold me-1">Xin chào, Văn A</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="topbarDropdown">
+                    <li><a class="dropdown-menu-item dropdown-item small py-2" href="#"><i class="bi bi-person me-2"></i> Hồ sơ cá nhân</a></li>
+                    <li><a class="dropdown-menu-item dropdown-item small py-2" href="#"><i class="bi bi-shield-check me-2"></i> Nhật ký bảo mật</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-menu-item dropdown-item small py-2 text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i> Đăng xuất hệ thống</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <main class="p-4 flex-grow-1">
+
+            <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 d-flex align-items-center mb-4" role="alert">
+                <i class="bi bi-check-circle-fill fs-4 me-3 text-success"></i>
+                <div>
+                    <strong>Đồng bộ thành công!</strong> Hệ thống vừa cập nhật dữ liệu kho vận mới nhất tự động từ API lúc 10:18 AM.
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="card bg-primary text-white border-0 shadow-sm h-100">
+                        <div class="card-body d-flex align-items-center justify-content-between p-4">
+                            <div>
+                                <h6 class="text-white-50 text-uppercase fs-7 fw-bold mb-1">Doanh thu tháng</h6>
+                                <h3 class="fw-bold mb-0">148.500K</h3>
+                            </div>
+                            <div class="fs-1 text-white-50"><i class="bi bi-currency-dollar"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="card bg-success text-white border-0 shadow-sm h-100">
+                        <div class="card-body d-flex align-items-center justify-content-between p-4">
+                            <div>
+                                <h6 class="text-white-50 text-uppercase fs-7 fw-bold mb-1">Đơn hàng mới</h6>
+                                <h3 class="fw-bold mb-0">+3,240</h3>
+                            </div>
+                            <div class="fs-1 text-white-50"><i class="bi bi-bag-check"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="card bg-warning text-dark border-0 shadow-sm h-100">
+                        <div class="card-body d-flex align-items-center justify-content-between p-4">
+                            <div>
+                                <h6 class="text-dark-50 text-uppercase fs-7 fw-bold mb-1">Tỷ lệ hoàn trả</h6>
+                                <h3 class="fw-bold mb-0">1.45%</h3>
+                            </div>
+                            <div class="fs-1 text-dark-50"><i class="bi bi-exclamation-triangle"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="card bg-danger text-white border-0 shadow-sm h-100">
+                        <div class="card-body d-flex align-items-center justify-content-between p-4">
+                            <div>
+                                <h6 class="text-white-50 text-uppercase fs-7 fw-bold mb-1">Khách trực tuyến</h6>
+                                <h3 class="fw-bold mb-0">842</h3>
+                            </div>
+                            <div class="fs-1 text-white-50"><i class="bi bi-people-fill"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-3">
+                    <div class="row g-2">
+                        <div class="col-12 col-md-6 col-lg-7">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control border-start-0 ps-0" placeholder="Tìm kiếm mã đơn hàng, tên khách hàng...">
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 col-lg-3">
+                            <select class="form-select text-muted">
+                                <option selected>Trạng thái xử lý...</option>
+                                <option value="1">Đã hoàn thành</option>
+                                <option value="2">Đang vận chuyển</option>
+                                <option value="3">Đã hủy đơn</option>
+                            </select>
+                        </div>
+                        <div class="col-6 col-md-3 col-lg-2 d-grid">
+                            <button type="button" class="btn btn-dark"><i class="bi bi-funnel-fill"></i> Lọc kết quả</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-5">
+                <div class="card-header bg-white py-3 fw-bold text-dark d-flex align-items-center justify-content-between">
+                    <span><i class="bi bi-list-task text-primary me-1"></i> Danh sách giao dịch gần đây</span>
+                    <button class="btn btn-outline-secondary btn-sm"><i class="bi bi-file-earmark-excel"></i> Xuất file báo cáo</button>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover mb-0 align-middle text-nowrap">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col" class="ps-4">Mã đơn</th>
+                                    <th scope="col">Tên khách hàng</th>
+                                    <th scope="col">Sản phẩm mua</th>
+                                    <th scope="col">Tổng tiền</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col" class="pe-4 text-end">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="ps-4 fw-bold">#ORD-9481</td>
+                                    <td>Trần Thị Bích</td>
+                                    <td>iPhone 16 Pro Max 256GB</td>
+                                    <td>34.990.000đ</td>
+                                    <td><span class="badge bg-success-subtle text-success border border-success-subtle">Đã hoàn thành</span></td>
+                                    <td class="pe-4 text-end"><button class="btn btn-sm btn-light border"><i class="bi bi-pencil-square"></i> Sửa</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-4 fw-bold">#ORD-8592</td>
+                                    <td>Lê Hoàng Long</td>
+                                    <td>MacBook Pro M3 14-inch</td>
+                                    <td>45.990.000đ</td>
+                                    <td><span class="badge bg-warning-subtle text-warning border border-warning-subtle">Đang vận chuyển</span></td>
+                                    <td class="pe-4 text-end"><button class="btn btn-sm btn-light border"><i class="bi bi-pencil-square"></i> Sửa</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-4 fw-bold">#ORD-3810</td>
+                                    <td>Phạm Minh Tú</td>
+                                    <td>Tai nghe AirPods Pro 2 Type-C</td>
+                                    <td>6.990.000đ</td>
+                                    <td><span class="badge bg-danger-subtle text-danger border border-danger-subtle">Đã hủy đơn</span></td>
+                                    <td class="pe-4 text-end"><button class="btn btn-sm btn-light border"><i class="bi bi-pencil-square"></i> Sửa</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-4 fw-bold">#ORD-1094</td>
+                                    <td>Hoàng Ngọc Anh</td>
+                                    <td>Máy tính bảng iPad Air M2</td>
+                                    <td>16.990.000đ</td>
+                                    <td><span class="badge bg-success-subtle text-success border border-success-subtle">Đã hoàn thành</span></td>
+                                    <td class="pe-4 text-end"><button class="btn btn-sm btn-light border"><i class="bi bi-pencil-square"></i> Sửa</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h4 class="fw-bold text-dark mb-3"><i class="bi bi-question-circle text-info"></i> Góc Hướng Dẫn & Câu Hỏi Thường Gặp (FAQ)</h4>
+                    <div class="accordion shadow-sm" id="dashboardFAQ">
+                        
+                        <div class="accordion-item border-0 mb-2 rounded shadow-xs">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button fw-semibold rounded" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">
+                                    1. Làm thế nào để xử lý một đơn hàng đang ở trạng thái hoãn vận chuyển?
+                                </button>
+                            </h2>
+                            <div id="faqOne" class="accordion-collapse collapse show" data-bs-parent="#dashboardFAQ">
+                                <div class="accordion-body bg-white text-secondary small">
+                                    Khi đơn hàng chuyển sang trạng thái hoãn, người quản trị hệ thống cần bấm vào biểu tượng "Sửa" ở cột hành động, kiểm tra lại tồn kho vật lý tại kho vận, liên hệ đơn vị trung gian giao nhận (GHTK, GHN) để tra cứu vận đơn, sau đó cập nhật lại ghi chú nội bộ trước khi đổi trạng thái sang "Đang vận chuyển".
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border-0 mb-2 rounded">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-semibold rounded" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">
+                                    2. Hệ thống thống kê doanh thu cập nhật theo chu kỳ thời gian thực như thế nào?
+                                </button>
+                            </h2>
+                            <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#dashboardFAQ">
+                                <div class="accordion-body bg-white text-secondary small">
+                                    Bốn thẻ chỉ số thống kê (`Stat Cards`) ở phía trên cùng của Dashboard hoạt động theo cơ chế cập nhật tự động bằng lệnh gọi ngầm (Polling API) định kỳ 5 phút một lần từ máy chủ lõi. Doanh thu tháng sẽ tự động chốt số liệu đồng bộ chính xác vào lúc 23:59 ngày cuối cùng của tháng.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="bg-white text-center py-3 border-top mt-auto text-muted small">
+            <div>&copy; 2026 TechAdmin Panel. Xây dựng hoàn chỉnh bằng Bootstrap 5 CSS Utilities.</div>
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
