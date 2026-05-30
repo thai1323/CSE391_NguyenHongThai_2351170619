@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài B4 — Keyboard Shortcuts & Accessibility</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="shortcut-cheatsheet" role="note" aria-label="Hướng dẫn phím tắt">
+        <h3>Bảng Phím Tắt Hệ Thống</h3>
+        <ul>
+            <li><kbd>Ctrl</kbd> + <kbd>K</kbd> : Mở ô lệnh Command Palette</li>
+            <li><kbd>←</kbd> / <kbd>→</kbd> : Chuyển ảnh Trước / Sau</li>
+            <li><kbd>1</kbd> - <kbd>6</kbd> : Nhảy nhanh đến số thứ tự ảnh</li>
+            <li><kbd>Space</kbd> : Bật / Tắt Slideshow tự động chạy</li>
+            <li><kbd>Esc</kbd> : Đóng hộp thoại Modal / Command Palette</li>
+        </ul>
+    </div>
+
+    <main class="gallery-container">
+        <header class="gallery-header">
+            <h2>Bộ Sưu Tập Công Nghệ</h2>
+            <p>Sử dụng các phím điều hướng hoặc nhấn Tab để tương tác</p>
+        </header>
+
+        <section class="viewer-section" aria-label="Khung xem ảnh chính">
+            <div class="main-viewer">
+                <img id="mainImage" src="" alt="Ảnh đang tải" class="active-slide">
+                <div id="slideshowStatus" class="slideshow-badge" aria-live="polite">Slideshow: Tắt</div>
+            </div>
+            
+            <div class="nav-controls">
+                <button id="prevBtn" class="nav-btn" aria-label="Ảnh trước">◀ Trước</button>
+                <button id="playBtn" class="nav-btn" aria-label="Tự động phát slideshow">▶ Phát</button>
+                <button id="nextBtn" class="nav-btn" aria-label="Ảnh sau">Sau ▶</button>
+            </div>
+        </section>
+
+        <section class="thumbnails-section" aria-label="Danh sách ảnh thu nhỏ">
+            <div id="thumbGrid" class="thumb-grid" role="listbox" aria-label="Chọn ảnh hiển thị">
+                </div>
+        </section>
+    </main>
+
+    <div id="cmdPalette" class="cmd-overlay" role="dialog" aria-modal="true" aria-label="Hộp lệnh hệ thống" aria-hidden="true">
+        <div class="cmd-box">
+            <div class="cmd-header">
+                <span class="cmd-search-icon">🔍</span>
+                <input type="text" id="cmdInput" placeholder="Gõ từ khóa để tìm lệnh (Ví dụ: play, next, dark...)" autocomplete="off" aria-label="Tìm kiếm lệnh">
+            </div>
+            <ul id="cmdList" class="cmd-results" role="listbox" aria-label="Kết quả tìm kiếm lệnh">
+                </ul>
+            <div class="cmd-footer">
+                Sử dụng phím <kbd>↑</kbd> <kbd>↓</kbd> để di chuyển, <kbd>Enter</kbd> để chọn, <kbd>Esc</kbd> để thoát.
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
