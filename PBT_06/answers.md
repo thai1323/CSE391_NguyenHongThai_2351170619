@@ -159,3 +159,36 @@ Nếu bạn ép cứng background: red; bằng CSS, nút bấm của bạn sẽ 
 Việc viết đè CSS bắt buộc bạn phải viết thêm các đoạn mã mới bên dưới, thậm chí phải lạm dụng từ khóa !important để thắng được độ ưu tiên của Selector Bootstrap. Điều này làm file CSS ngày một nặng và cực kỳ khó bảo trì.
 
 Trong khi đó, can thiệp bằng SASS Variables giúp thay đổi giá trị ngay từ "gốc rễ" lúc biên dịch. File CSS xuất ra cuối cùng cực kỳ sạch sẽ, gọn gàng và không chứa một dòng mã thừa nào.
+
+# CÂU C2 — SO SÁNH CSS THUỒN VS BOOTSTRAP
+
+---
+
+## 1. Bảng so sánh kỹ thuật định lượng & định tính
+
+Dựa trên việc triển khai thực tế 2 thành phần phổ biến là **Navbar Responsive** (thanh điều hướng tự ẩn/hiện menu trên mobile) và **Product Card** (thẻ sản phẩm có đổ bóng, bo góc, nút bấm), dưới đây là bảng đối chiếu chi tiết:
+
+| Tiêu chí | Sử dụng CSS thuần (Vanilla CSS) | Sử dụng Bootstrap Framework |
+| :--- | :--- | :--- |
+| **Số dòng CSS cần viết** | **Rất nhiều (Khoảng 80 - 120 dòng)**<br>• Phải tự viết `@media (max-width: ...)` để xử lý ẩn hiện menu.<br>• Phải viết các thuộc tính Flexbox, căn lề, đổ bóng `box-shadow`, bo góc `border-radius` từ đầu. | **Gần như bằng 0 (0 - 5 dòng)**<br>• Không cần viết file `.css` rời.<br>• Chỉ cần phối hợp các Utility Classes có sẵn trực tiếp vào HTML như: `navbar`, `navbar-expand-md`, `card`, `shadow`, `rounded`. |
+| **Thời gian phát triển** | **Chậm (Tốn nhiều giờ)**<br>Phải thiết kế, căn chỉnh từng pixel, kiểm tra lỗi vỡ giao diện trên nhiều thiết bị (Chrome, Safari, Mobile, Tablet). | **Cực kỳ nhanh (Tốn vài phút)**<br>Chỉ cần copy cấu trúc Component chuẩn từ tài liệu của Bootstrap và thay đổi nội dung chữ/hình ảnh. |
+| **Khả năng tùy biến** | **Vô hạn (Không giới hạn)**<br>Bạn có toàn quyền kiểm soát mọi thuộc tính. Thích hợp cho các layout độc lạ, phá cách, không đụng hàng. | **Bị giới hạn (Nếu chỉ dùng CSS thông thường)**<br>Giao diện dễ bị rập khuôn, mang đậm "phong cách Bootstrap". Tuy nhiên, nếu biết dùng **SASS/SCSS Variables** thì khả năng tùy biến sâu tăng lên rất mạnh. |
+
+---
+
+## 2. Phân tích chi tiết: Khi nào NÊN và KHÔNG NÊN dùng Bootstrap?
+
+
+
+###  2.1. Khi nào NÊN dùng Bootstrap?
+
+* **Dự án cần hoàn thiện nhanh (Mì ăn liền):** Các dự án Hackathon, sản phẩm thử nghiệm (MVP - Minimum Viable Product), hoặc các bài tập lớn/đồ án môn học cần tập trung vào logic tính năng hơn là chau chuốt giao diện.
+* **Hệ thống quản trị (Admin Dashboard/CMS):** Những trang web nội bộ, biểu đồ, bảng biểu dữ liệu, nơi mà sự gọn gàng, mạch lạc và tính chuẩn hóa được đặt lên hàng đầu chứ không cần nghệ thuật.
+* **Làm việc nhóm đông người (Teamwork):** Do Bootstrap có bộ quy chuẩn class rất rõ ràng, tất cả các lập trình viên trong đội nhìn vào đều hiểu ngay mà không mất thời gian đọc hiểu file CSS "tự chế" rối rắm của người khác.
+* **Thiếu nhân sự chuyên Front-End:** Khi đội ngũ mạnh về Back-End nhưng cần tự tay dựng giao diện chuẩn responsive nhanh chóng mà không bị méo mó, lệch hàng.
+
+### 🛑 2.2. Khi nào KHÔNG NÊN dùng Bootstrap?
+
+* **Website thương hiệu độc quyền (Creative/Landing Page nghệ thuật):** Các trang web giới thiệu sản phẩm cao cấp, studio nghệ thuật, agency sáng tạo đòi hỏi layout bất đối xứng, hiệu ứng animation phức tạp hoặc giao diện độc nhất vô nhị.
+* **Yêu cầu tối ưu hiệu năng tối đa (Performance/Lightweight):** Bootstrap đi kèm với một lượng mã nguồn CSS và JS khá đồ sộ. Nếu dự án của bạn chỉ là một trang Landing Page siêu đơn giản, việc nhúng cả thư viện Bootstrap sẽ làm phình dung lượng tải trang một cách lãng phí (Dù có thể tối ưu bằng Tree-shaking nhưng vẫn cồng kềnh hơn CSS viết tay).
+* **Muốn học sâu về bản chất CSS:** Đối với các bạn đang trong quá trình học lập trình Web, việc lạm dụng Bootstrap quá sớm sẽ gây ra hội chứng "nghiện class", khiến bạn mất đi tư duy gốc về Flexbox, Grid, định vị (`position`), và cách trình duyệt tính toán độ ưu tiên của CSS selector.
