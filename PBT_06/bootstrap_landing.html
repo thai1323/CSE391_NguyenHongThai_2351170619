@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài B1 — Landing Page Bootstrap E-Commerce</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-uppercase tracking-wider text-danger" href="#">
+                <i class="bi bi-lightning-charge-fill"></i> TechStore
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="#">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Điện thoại</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Laptop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Phụ kiện</a></li>
+                </ul>
+                
+                <form class="d-flex me-3" role="search">
+                    <div class="input-group">
+                        <input class="form-control" type="search" placeholder="Tìm sản phẩm..." aria-label="Search">
+                        <button class="btn btn-danger" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+
+                <a href="#" class="btn btn-outline-light position-relative mt-2 mt-lg-0">
+                    <i class="bi bi-cart3 fs-5"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        3
+                    </span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div id="heroCarousel" class="carousel slide carousel-fade shadow mb-5" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="5000">
+                <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=1600&q=80" class="d-block w-100 object-fit-cover" style="height: 450px; filter: brightness(40%);" alt="Siêu Sale">
+                <div class="carousel-caption d-none d-md-block text-start bottom-50 translate-middle-y">
+                    <span class="badge bg-danger mb-2 p-2 text-uppercase">Khuyến mãi cực đại</span>
+                    <h1 class="display-4 fw-bold">Mùa Mua Sắm Lớn Nhất Năm</h1>
+                    <p class="lead">Giảm giá lên đến 50% cho tất cả các thiết bị công nghệ Apple và Samsung.</p>
+                    <a href="#shop-section" class="btn btn-danger btn-lg px-4">Mua Ngay Lập Tức</a>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="5000">
+                <img src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1600&q=80" class="d-block w-100 object-fit-cover" style="height: 450px; filter: brightness(40%);" alt="Laptop đỉnh cao">
+                <div class="carousel-caption d-none d-md-block text-start bottom-50 translate-middle-y">
+                    <span class="badge bg-warning text-dark mb-2 p-2 text-uppercase">Sản phẩm mới</span>
+                    <h1 class="display-4 fw-bold">Laptop Đồ Họa Cực Khủng</h1>
+                    <p class="lead">Trải nghiệm sức mạnh xử lý tuyệt đỉnh từ các dòng Macbook Pro và Dell XPS mới nhất.</p>
+                    <a href="#shop-section" class="btn btn-warning btn-lg px-4">Khám Phá Bộ Sưu Tập</a>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="5000">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1600&q=80" class="d-block w-100 object-fit-cover" style="height: 450px; filter: brightness(40%);" alt="Phụ kiện âm thanh">
+                <div class="carousel-caption d-none d-md-block text-start bottom-50 translate-middle-y">
+                    <span class="badge bg-info text-dark mb-2 p-2 text-uppercase">Giảm giá 30%</span>
+                    <h1 class="display-4 fw-bold">Phụ Kiện Âm Thanh Đỉnh Cao</h1>
+                    <p class="lead">Đắm chìm không gian âm nhạc chân thực cùng AirPods Pro và Galaxy Buds.</p>
+                    <a href="#shop-section" class="btn btn-info btn-lg px-4">Xem Danh Mục</a>
+                </div>
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+    <div class="container mb-5" id="shop-section">
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+            <h2 class="fw-bold text-dark"><i class="bi bi-fire text-danger"></i> Sản Phẩm Nổi Bật</h2>
+            <span class="text-muted d-none d-sm-block">Hiển thị 4 sản phẩm hot</span>
+        </div>
+
+        <div class="row g-4">
+            
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 shadow-sm border-0 position-relative card-hover">
+                    <span class="position-absolute top-0 start-0 m-2 badge bg-danger p-2 shadow-sm z-3">SALE -10%</span>
+                    <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=400&q=80" class="card-img-top object-fit-cover" style="height: 200px;" alt="iPhone 16">
+                    <div class="card-body d-flex flex-column">
+                        <span class="text-muted text-uppercase fs-7 fw-semibold">Phone</span>
+                        <h5 class="card-title fw-bold my-1">iPhone 16 Pro</h5>
+                        <div class="text-warning mb-2 small">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i> 
+                            <span class="text-muted small">(4.5)</span>
+                        </div>
+                        <p class="card-text text-danger fw-bold fs-5 mb-3">25.990.000đ <span class="text-muted fs-7 text-decoration-line-through fw-normal">28.990.000đ</span></p>
+                        <div class="mt-auto d-grid gap-2">
+                            <button class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#quickViewModal" data-bs-title="iPhone 16 Pro" data-bs-price="25.990.000đ" data-bs-img="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=400&q=80" data-bs-desc="Siêu phẩm camera đỉnh cao, chip A18 Pro mạnh mẽ nhất từ trước đến nay, bộ nhớ trong từ 256GB, khung vỏ Titan siêu bền nhẹ.">
+                                <i class="bi bi-eye"></i> Xem nhanh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 shadow-sm border-0 position-relative">
+                    <span class="position-absolute top-0 start-0 m-2 badge bg-danger p-2 shadow-sm z-3">HOT SALE</span>
+                    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80" class="card-img-top object-fit-cover" style="height: 200px;" alt="MacBook Pro">
+                    <div class="card-body d-flex flex-column">
+                        <span class="text-muted text-uppercase fs-7 fw-semibold">Laptop</span>
+                        <h5 class="card-title fw-bold my-1">MacBook Pro M3</h5>
+                        <div class="text-warning mb-2 small">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i> 
+                            <span class="text-muted small">(4.8)</span>
+                        </div>
+                        <p class="card-text text-danger fw-bold fs-5 mb-3">45.990.000đ</p>
+                        <div class="mt-auto d-grid gap-2">
+                            <button class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#quickViewModal" data-bs-title="MacBook Pro M3" data-bs-price="45.990.000đ" data-bs-img="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80" data-bs-desc="Hiệu năng đồ họa đột phá với vi xử lý Apple M3 thế hệ mới, màn hình Liquid Retina XDR 120Hz mượt mà, thời lượng pin trâu lên đến 22 giờ liên tục.">
+                                <i class="bi bi-eye"></i> Xem nhanh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 shadow-sm border-0 position-relative">
+                    <span class="position-absolute top-0 start-0 m-2 badge bg-danger p-2 shadow-sm z-3">SALE -15%</span>
+                    <img src="https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=400&q=80" class="card-img-top object-fit-cover" style="height: 200px;" alt="AirPods Pro">
+                    <div class="card-body d-flex flex-column">
+                        <span class="text-muted text-uppercase fs-7 fw-semibold">Accessory</span>
+                        <h5 class="card-title fw-bold my-1">AirPods Pro 2</h5>
+                        <div class="text-warning mb-2 small">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-regular"></i> 
+                            <span class="text-muted small">(4.3)</span>
+                        </div>
+                        <p class="card-text text-danger fw-bold fs-5 mb-3">6.990.000đ <span class="text-muted fs-7 text-decoration-line-through fw-normal">7.990.000đ</span></p>
+                        <div class="mt-auto d-grid gap-2">
+                            <button class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#quickViewModal" data-bs-title="AirPods Pro 2" data-bs-price="6.990.000đ" data-bs-img="https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=400&q=80" data-bs-desc="Công nghệ chống ồn chủ động ANC tăng gấp 2 lần, chip H2 thông minh tái tạo âm thanh vòm sống động, cổng sạc Type-C hiện đại tiện lợi.">
+                                <i class="bi bi-eye"></i> Xem nhanh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 shadow-sm border-0 position-relative">
+                    <span class="position-absolute top-0 start-0 m-2 badge bg-secondary p-2 shadow-sm z-3">HẾT HÀNG</span>
+                    <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=400&q=80" class="card-img-top object-fit-cover Opacity-75" style="height: 200px;" alt="iPad Air">
+                    <div class="card-body d-flex flex-column">
+                        <span class="text-muted text-uppercase fs-7 fw-semibold">Tablet</span>
+                        <h5 class="card-title fw-bold my-1">iPad Air M2</h5>
+                        <div class="text-warning mb-2 small">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i> 
+                            <span class="text-muted small">(4.6)</span>
+                        </div>
+                        <p class="card-text text-danger fw-bold fs-5 mb-3">16.990.000đ</p>
+                        <div class="mt-auto d-grid gap-2">
+                            <button class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#quickViewModal" data-bs-title="iPad Air M2" data-bs-price="16.990.000đ" data-bs-img="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=400&q=80" data-bs-desc="Thiết kế siêu mỏng nhẹ thời trang, sở hữu sức mạnh xử lý vượt bậc của chip Apple M2, tương thích hoàn hảo Apple Pencil Pro giúp vẽ sáng tạo mượt mà.">
+                                <i class="bi bi-eye"></i> Xem nhanh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title fw-bold" id="quickViewModalLabel">Chi Tiết Sản Phẩm</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-close="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-5">
+                            <img id="modalImg" src="" class="img-fluid rounded border w-100 object-fit-cover" style="height: 250px;" alt="Hình ảnh sản phẩm">
+                        </div>
+                        <div class="col-12 col-md-7 d-flex flex-column">
+                            <h3 id="modalTitle" class="fw-bold text-dark mb-1">Tên sản phẩm</h3>
+                            <h4 id="modalPrice" class="text-danger fw-bold mb-3">0đ</h4>
+                            <p class="text-muted fw-semibold mb-1">Mô tả sản phẩm:</p>
+                            <p id="modalDesc" class="text-secondary small">Nội dung mô tả sản phẩm chi tiết.</p>
+                            
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Chọn Màu Sắc:</label>
+                                <div class="btn-group btn-group-sm d-flex w-50" role="group">
+                                    <input type="radio" class="btn-check" name="color" id="c1" checked>
+                                    <label class="btn btn-outline-dark" for="c1">Titan</label>
+                                    <input type="radio" class="btn-check" name="color" id="c2">
+                                    <label class="btn btn-outline-dark" for="c2">Đen</label>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto d-flex gap-2">
+                                <button type="button" class="btn btn-danger flex-grow-1"><i class="bi bi-bag-plus"></i> Thêm vào giỏ</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="bg-dark text-white-50 pt-5 pb-3 border-top border-secondary">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h5 class="text-white fw-bold mb-3"><i class="bi bi-lightning-charge-fill text-danger"></i> TECHSTORE</h5>
+                    <p class="small">Hệ thống bán lẻ thiết bị công nghệ chính hãng hàng đầu Việt Nam. Cam kết uy tín, chất lượng và dịch vụ hậu mãi số 1.</p>
+                    <div class="d-flex gap-3 fs-5 mt-2">
+                        <a href="#" class="text-white-50"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white-50"><i class="bi bi-youtube"></i></a>
+                        <a href="#" class="text-white-50"><i class="bi bi-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h5 class="text-white fw-bold mb-3">Chính Sách Mua Hàng</h5>
+                    <ul class="list-unstyled small d-grid gap-2">
+                        <li><a href="#" class="text-decoration-none text-white-50">Chính sách bảo hành đổi trả</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Chính sách vận chuyển toàn quốc</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Phương thức thanh toán trả góp</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Chính sách bảo mật thông tin</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h5 class="text-white fw-bold mb-3">Danh Mục Sản Phẩm</h5>
+                    <ul class="list-unstyled small d-grid gap-2">
+                        <li><a href="#" class="text-decoration-none text-white-50">Điện thoại iPhone / Samsung</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Laptop văn phòng & Đồ họa</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Máy tính bảng iPad Air / Pro</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Tai nghe không dây chống ồn</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h5 class="text-white fw-bold mb-3">Đăng Ký Nhận Tin Tức</h5>
+                    <p class="small">Nhận ngay thông báo khuyến mãi và mã voucher giảm giá 100k sớm nhất.</p>
+                    <div class="input-group input-group-sm">
+                        <input type="email" class="form-control" placeholder="Email của bạn...">
+                        <button class="btn btn-danger" type="button">Đăng ký</button>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="border-secondary my-4">
+            <div class="text-center small">
+                <p class="mb-0">&copy; 2026 TechStore. Tất cả các quyền được bảo lưu. Thiết kế bằng Bootstrap 5.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Kỹ thuật bắt sự kiện click mở Modal của Bootstrap để đổ dữ liệu động từ thuộc tính HTML sang giao diện Popup
+        const quickViewModal = document.getElementById('quickViewModal');
+        if (quickViewModal) {
+            quickViewModal.addEventListener('show.bs.modal', function (event) {
+                // Nút kích hoạt lệnh mở modal
+                const button = event.relatedTarget;
+                
+                // Trích xuất các chuỗi thông tin từ thuộc tính data-bs-*
+                const title = button.getAttribute('data-bs-title');
+                const price = button.getAttribute('data-bs-price');
+                const img = button.getAttribute('data-bs-img');
+                const desc = button.getAttribute('data-bs-desc');
+                
+                // Cập nhật text/src vào các thẻ tương ứng bên trong cấu trúc Modal
+                quickViewModal.querySelector('#modalTitle').textContent = title;
+                quickViewModal.querySelector('#modalPrice').textContent = price;
+                quickViewModal.querySelector('#modalImg').setAttribute('src', img);
+                quickViewModal.querySelector('#modalDesc').textContent = desc;
+            });
+        }
+    </script>
+</body>
+</html>
