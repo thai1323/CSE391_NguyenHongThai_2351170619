@@ -101,3 +101,61 @@ Cả 3 class này đều đóng vai trò làm **Khối bọc ngoài cùng (Layou
   * Khi màn hình **nhỏ hơn 768px** (Mobile): Nó hoạt động giống y hệt `.container-fluid`, tức là **tràn viền 100%** để tiết kiệm không gian hiển thị cho màn hình nhỏ.
   * Khi màn hình **từ 768px trở lên** (Tablet, Desktop): Nó lập tức "biến hình" hoạt động giống `.container`, tức là **bị giới hạn độ rộng cố định** và co vào giữa trang.
 * **Phù hợp cho:** Các bài viết báo điện tử, trang tin tức cần tối ưu trải nghiệm đọc trên di động nhưng vẫn vuông vức trên màn hình máy tính.
+
+# CÂU C1 — TÙY BIẾN BOOTSTRAP (SASS VS CSS)
+
+---
+
+## 1. Quy trình đổi màu `$primary` từ xanh mặc định sang `#E63946`
+
+Để thay đổi tận gốc hệ thống màu sắc của Bootstrap, chúng ta không thể chỉnh sửa trên file CSS đã biên dịch (`bootstrap.css`) mà phải can thiệp thông qua mã nguồn SASS (`.scss`). 
+
+###  Các công cụ cần chuẩn bị:
+1. **Node.js**: Để cài đặt các gói thư viện cần thiết.
+2. **Bộ biên dịch SASS (Compiler)**: Sử dụng gói mã nguồn `sass` hoặc extension `Live Sass Compiler` trên VS Code để tự động biên dịch file `.scss` thành file `.css`.
+3. **Thư viện Bootstrap Source**: Được cài đặt vào dự án thông qua lệnh `npm install bootstrap`.
+
+###  Quy trình thực hiện chi tiết (Modify file):
+
+* **Bước 1**: Tạo một cấu trúc file stylesheet mới trong thư mục dự án của bạn, ví dụ: `assets/scss/main.scss`.
+* **Bước 2**: Viết mã nguồn tùy biến vào file `main.scss` theo đúng thứ tự bắt buộc của Bootstrap (Khai báo biến đè trước, import lõi sau).
+
+```scss
+// 1. Khai báo màu sắc tùy biến của riêng bạn
+$custom-red: #E63946;
+
+// 2. Ghi đè biến hệ thống của Bootstrap (Bắt buộc viết TRƯỚC khi import)
+$primary: $custom-red;
+
+// 3. Import toàn bộ cấu trúc mã nguồn SASS của Bootstrap từ node_modules
+@import "../node_modules/bootstrap/scss/bootstrap";
+* **Bước 3**: Kích hoạt bộ biên dịch để SASS tự động quét file main.scss và xuất ra file chạy thực tế là assets/css/main.css.
+
+* **Bước 4**: Nhúng file main.css vừa được tạo ra vào cặp thẻ <head> của HTML thay vì dùng link CDN mặc định.
+
+2. Tại sao KHÔNG nên override trực tiếp bằng CSS truyền thống?
+
+Việc viết đè cưỡng ép bằng CSS như: .btn-primary { background: red; } là một phương pháp làm thô sơ (Anti-pattern). Dưới đây là các lý do bản chất tại sao việc dùng SASS Variables tối ưu hơn tuyệt đối:
+
+ 2.1. Lỗi phân mảnh giao diện (Inconsistency) và sót thuộc tính
+Biến màu $primary của Bootstrap không chỉ áp dụng riêng cho mỗi nền nút bấm (.btn-primary). Nó được sử dụng để tính toán tự động cho hàng loạt thành phần khác:
+
+Màu chữ của liên kết (a { color: $primary; })
+
+Màu viền khi tiêu điểm trỏ vào ô nhập liệu (.form-control:focus)
+
+Màu nền của các thanh điều hướng (.bg-primary)
+
+Màu sắc của các biểu tượng thông báo, badge, các đường phân cách...
+
+Nếu bạn chỉ override .btn-primary, các thành phần kể trên vẫn sẽ giữ nguyên màu xanh blue mặc định, khiến giao diện trang web bị lem nhem, bất đồng bộ về nhận diện thương hiệu.
+
+ 2.2. Mất hiệu ứng tương tác động (State Hovers & Mixins)
+Khi sử dụng SASS, Bootstrap sử dụng các hàm toán học để tự động tính toán sắc độ: màu nút khi di chuột vào (:hover) sẽ tự động tối đi 10%, khi ấn xuống (:active) sẽ tối đi 15%.
+
+Nếu bạn ép cứng background: red; bằng CSS, nút bấm của bạn sẽ bị "lỳ" — khi di chuột vào nó sẽ giữ nguyên một màu đỏ thô, hoặc tệ hơn là chuyển sang màu xanh tương phản cũ của Bootstrap.
+
+ 2.3. Phình to dung lượng file và phá vỡ kiến trúc mã nguồn
+Việc viết đè CSS bắt buộc bạn phải viết thêm các đoạn mã mới bên dưới, thậm chí phải lạm dụng từ khóa !important để thắng được độ ưu tiên của Selector Bootstrap. Điều này làm file CSS ngày một nặng và cực kỳ khó bảo trì.
+
+Trong khi đó, can thiệp bằng SASS Variables giúp thay đổi giá trị ngay từ "gốc rễ" lúc biên dịch. File CSS xuất ra cuối cùng cực kỳ sạch sẽ, gọn gàng và không chứa một dòng mã thừa nào.
