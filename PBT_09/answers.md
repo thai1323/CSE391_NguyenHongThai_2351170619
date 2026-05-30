@@ -264,3 +264,60 @@ window.addEventListener("load", () => {
     }
 });
 
+# CÂU C2 — WEB PERFORMANCE (DOM OPTIMIZATION)
+
+---
+
+## 1. Event Delegation (Ủy quyền sự kiện) vs Cơn ác mộng hiệu năng
+
+### A. Tại sao gán sự kiện (Bind Event) lên 1000 phần tử riêng lẻ là BAD PRACTICE?
+
+Việc chạy vòng lặp để gắn 1000 hàm lắng nghe sự kiện (`addEventListener`) lên 1000 phần tử khác nhau gây sụt giảm hiệu năng nghiêm trọng vì 3 lý do bản chất sau:
+
+1. **Ngốn tài nguyên bộ nhớ (Memory Consumption):** Mỗi lần gọi `addEventListener`, JavaScript phải cấp phát một ô nhớ để lưu trữ một đối tượng hàm xử lý (Callback Function). Nhân lên 1000 lần sẽ làm phình to dung lượng bộ nhớ RAM (Memory Footprint) của trình duyệt. Trên các thiết bị cấu hình yếu hoặc di động, điều này dễ gây ra hiện tượng giật lag, thậm chí tràn bộ nhớ.
+2. **Ảnh hưởng cơ chế dọn rác (Garbage Collection):** Khi các phần tử HTML đó bị xóa khỏi giao diện (DOM), nếu lập trình viên quên không gỡ bỏ sự kiện (`removeEventListener`) một cách thủ công, các hàm xử lý này vẫn sẽ bị treo lơ lửng trong bộ nhớ. Hệ quả là gây ra hiện tượng **Rò rỉ bộ nhớ (Memory Leak)**.
+3. **Tốn chi phí khởi tạo ban đầu (Initialization Cost):** Trình duyệt phải mất thời gian duyệt qua vòng lặp và đăng ký từng sự kiện với hệ thống quản lý của nó ngay khi trang web vừa tải xong, làm chậm thời gian phản hồi tương tác đầu tiên của người dùng.
+
+### B. Event Delegation giải quyết bài toán này như thế nào?
+
+**Event Delegation (Ủy quyền sự kiện)** là kỹ thuật tận dụng cơ chế **Event Bubbling** (Sự kiện sủi bọt từ trong ra ngoài). Thay vì gắn 1000 trình lắng nghe sự kiện lên từng thẻ con, chúng ta **chỉ gắn ĐÚNG 1 trình lắng nghe duy nhất trên một thẻ cha bọc ngoài** (hoặc thẻ `document.body`).
+
+* **Cơ chế hoạt động:** Khi người dùng click vào bất kỳ thẻ con nào, sự kiện click đó sẽ tự động sủi bọt ngược lên trên thẻ cha. Tại thẻ cha, chúng ta chỉ cần dùng thuộc tính `e.target` để kiểm tra xem phần tử gốc thực tế được click là ai thông qua thuộc tính tên thẻ (`nodeName`), class (`classList`), hoặc id, từ đó đưa ra hướng xử lý phù hợp.
+* **Lợi ích:** Tiết kiệm tối đa bộ nhớ (chỉ chạy 1 hàm duy nhất), không lo rò rỉ bộ nhớ khi xóa thẻ con, và tự động áp dụng luôn cho cả các thẻ con được thêm mới vào DOM sau này mà không cần đăng ký lại.
+
+---
+
+## 2. Tối ưu hóa giao diện bằng `DocumentFragment`
+
+### A. Mã nguồn sau khi Refactor (Chỉ gây đúng 1 lần Reflow):
+
+```javascript
+// Bước 1: Tạo ra một "vùng đệm chứa tạm" ảo trong bộ nhớ (Không nằm trên cây DOM thật)
+const fragment = document.createDocumentFragment();
+
+for (let i = 0; i < 1000; i++) {
+    const div = document.createElement("div");
+    div.textContent = `Item ${i}`;
+    
+    // Bước 2: Chỉ chèn phần tử mới vào vùng đệm ảo fragment
+    fragment.appendChild(div); // ← Hành động này diễn ra hoàn toàn trong bộ nhớ RAM, 0 lần reflow!
+}
+
+// Bước 3: Đẩy toàn bộ cấu trúc 1000 thẻ từ vùng đệm vào cây DOM thật duy nhất 1 lần
+document.body.appendChild(fragment); // ← Chỉ gây ra ĐÚNG 1 lần Reflow/Repaint duy nhất!
+B. Giải thích tại sao giải pháp này chạy nhanh hơn vượt trội?
+Để hiểu tại sao DocumentFragment nhanh hơn, chúng ta cần so sánh hành vi xử lý đồ họa của trình duyệt:
+
+ Cách làm cũ (1000 lần Reflow):
+Cứ mỗi lần chạy qua lệnh document.body.appendChild(div);, trình duyệt lại bị ép phải tạm dừng công việc JS để tính toán lại toàn bộ kích thước, hình học, vị trí tọa độ của tất cả các phần tử trên trang (Reflow) và vẽ lại màu sắc lên màn hình (Repaint).
+
+Thực hiện chuỗi hành động nặng nề này liên tục 1000 lần giống như việc bạn bắt xe tải chở từng viên gạch một từ cửa hàng về nhà 1000 chuyến liên tiếp, khiến CPU và GPU của trình duyệt bị quá tải, gây ra hiện tượng nghẽn cổ chai giao diện (Layout Thrashing).
+
+Cách làm mới với DocumentFragment (1 lần Reflow):
+DocumentFragment bản chất là một nút DOM rỗng, hoạt động như một chiếc "giỏ hàng tạm thời" nằm hoàn toàn biệt lập trong bộ nhớ RAM của trình duyệt.
+
+Khi ta thêm các thẻ div vào fragment, trình duyệt hoàn toàn không phải tính toán hay vẽ bất cứ thứ gì lên màn hình vì chiếc giỏ này chưa hề được nhúng vào trang web thật.
+
+Khi kết thúc vòng lặp, lệnh document.body.appendChild(fragment); đổ toàn bộ 1000 viên gạch xuống cùng một lúc. Giống như việc gom đủ 1000 viên gạch lên một chiếc xe tải lớn và chở về trong 1 chuyến duy nhất. Trình duyệt chỉ mất đúng 1 lần tính toán lại bố cục toàn trang, giúp tốc độ render nhanh hơn gấp hàng chục lần.
+
+
