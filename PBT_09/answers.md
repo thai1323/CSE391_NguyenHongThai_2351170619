@@ -136,4 +136,33 @@ const userInput = document.querySelector("#search").value;
 // Giữ lại các thẻ định dạng an toàn (b, i, strong) và bóc tách toàn bộ mã độc hại
 const cleanInput = DOMPurify.sanitize(userInput);
 
-document.querySelector("#result").innerHTML = cleanInput; // Đã an toàn!
+document.querySelector("#result").innerHTML = cleanInput; 
+
+## CÂU A3 — EVENT BUBBLING (SỰ KIỆN SỦI BỌT)
+
+---
+
+## 1. Dự đoán kết quả Output (Không chạy code)
+
+Khi người dùng thực hiện hành động click vào phần tử `<button id="btn">`, kết quả in ra màn hình `console` trong 2 trường hợp sẽ như sau:
+
+### Trường hợp 1: Khi dòng lệnh `e.stopPropagation();` vẫn bị KHÓA (Gốc)
+```text
+BUTTON
+INNER
+OUTER
+
+### Trường hợp 2: Khi MỞ KHÓA (Bỏ comment) dòng lệnh e.stopPropagation();
+BUTTON
+
+2. Giải thích chi tiết bản chất cơ chế sủi bọt sự kiện
+A. Tại sao trường hợp gốc lại in ra cả 3 từ theo thứ tự từ trong ra ngoài?
+Cơ chế Event Bubbling (Sự kiện sủi bọt): Trong JavaScript DOM, khi một sự kiện (như click) xảy ra trên một phần tử, nó không chỉ kích hoạt riêng phần tử đó. Sự kiện sẽ tự động "sủi bọt" (chạy ngược lên trên) qua các phần tử cha, ông, tổ tiên của nó theo thứ tự cây gia phả cho đến khi chạm tới thẻ <html> và document.
+Trình tự kích hoạt: Khi bạn click vào #btn (Target - Mục tiêu gốc):
+   Trình duyệt thực thi callback của #btn đầu tiên $\rightarrow$ In ra BUTTON.
+   Sự kiện sủi bọt lên phần tử cha trực tiếp là #inner $\rightarrow$ Kích hoạt lắng nghe và in ra INNER.
+   Sự kiện tiếp tục sủi bọt lên phần tử cha tiếp theo là #outer $\rightarrow$ Kích hoạt lắng nghe và in ra OUTER.
+B. Phương thức e.stopPropagation() có tác dụng gì?
+   Bản chất kỹ thuật: Hàm stopPropagation() (Dừng lan truyền) có nhiệm vụ chặn đứng dòng chảy sủi bọt của sự kiện ngay tại vị trí nó được gọi. Nó dựng lên một "bức tường" ngăn không cho sự kiện lan lên các tầng cha phía trên.
+   Hệ quả khi mở comment: Khi sự kiện click vừa chạm vào #btn, trình duyệt in ra chữ BUTTON và ngay lập tức va phải lệnh e.stopPropagation(). Sự kiện click bị triệt tiêu hoàn toàn ngay tại khối nút bấm. Do đó, cả hai phần tử #inner và #outer ở phía ngoài không hề nhận được tín hiệu click nào nữa, màn hình dừng lại và chỉ hiển thị duy nhất một dòng BUTTON.
+
