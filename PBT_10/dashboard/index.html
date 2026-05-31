@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài B4 — Multi-API Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div>
+                <h1>Hệ Thống Trung Tâm Multi-API</h1>
+                <p id="performanceMetric" class="metric-text">Chưa tải dữ liệu hệ thống.</p>
+            </div>
+            <button id="refreshAllBtn" class="refresh-btn">🔄 Làm mới tất cả</button>
+        </header>
+
+        <main class="dashboard-grid">
+            
+            <section id="widget-0" class="widget-card">
+                <div class="widget-header">
+                    <h2>🌤️ Thời Tiết Hà Nội</h2>
+                </div>
+                <div class="widget-content">
+                    </div>
+            </section>
+
+            <section id="widget-1" class="widget-card">
+                <div class="widget-header">
+                    <h2>🇻🇳 Quốc Gia Việt Nam</h2>
+                </div>
+                <div class="widget-content">
+                    </div>
+            </section>
+
+            <section id="widget-2" class="widget-card">
+                <div class="widget-header">
+                    <h2>🐶 Thú Cưng Ngẫu Nhiên</h2>
+                </div>
+                <div class="widget-content">
+                    </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
