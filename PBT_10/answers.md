@@ -348,3 +348,134 @@ Cơ chế bẫy lỗi cô lập: Khối try...catch nằm bên trong vòng lặp
 
 Hàm đợi bất đồng bộ (Delay Promise): Dòng lệnh await new Promise(resolve => setTimeout(resolve, delay)) tạo ra một khoảng nghỉ (ví dụ 2 giây) giữa các lần thử. Điều này rất quan trọng vì nếu mạng đang rớt hoặc Server đang nghẽn, việc gửi 3 request liên tục trong 1 mili giây sẽ vô tác dụng và càng làm nặng thêm cho hệ thống. Khoảng nghỉ giúp hệ thống mạng/máy chủ có thời gian hồi phục.
 
+### Câu C2 — Promise.all vs Promise.allSettled vs Promise.race
+1. Bảng so sánh tổng quan (Kiến thức cốt lõi)
+| Method | Khi nào resolve? | Khi nào reject? | Use case thực tế |
+| :--- | :--- | :--- | :--- |
+| **`Promise.all()`** | Khi **tất cả** các Promise trong mảng truyền vào đều thành công (`fulfilled`). Trả về mảng kết quả theo đúng thứ tự. | Ngay khi **có ít nhất một** Promise bị lỗi (`rejected`). Lập tức hủy bỏ việc đợi các Promise còn lại. | Tải các dữ liệu phụ thuộc lẫn nhau để dựng giao diện (Ví dụ: Trang Dashboard cần thông tin User + cấu hình chung). |
+| **`Promise.allSettled()`** | Khi **tất cả** các Promise đều **đã chạy xong** (bất kể thành công hay thất bại). Không bao giờ rơi vào trạng thái reject. | **Không bao giờ** bị reject. | Tải các dữ liệu độc lập, không ảnh hưởng đến nhau (Ví dụ: Đổ danh sách sản phẩm, nếu box quảng cáo bên cạnh lỗi thì vẫn hiện sản phẩm). |
+| **`Promise.race()`** | Khi **có một** Promise đầu tiên trong mảng chạy xong (bất kể nó **thành công hay thất bại**). | Khi Promise đầu tiên về đích bị **thất bại**. | Triển khai cơ chế Chống nghẽn mạng mạng (Request Timeout) hoặc chọn Server phản hồi nhanh nhất. |
+| **`Promise.any()`** | Khi **có một** Promise đầu tiên về đích **thành công** (`fulfilled`). | Chỉ khi **tất cả** các Promise trong mảng đều **thất bại**. Trả về một lỗi gộp `AggregateError`. | Gọi dữ liệu từ nhiều nguồn dự phòng (Cùng một file đặt ở 3 máy chủ CDN khác nhau, nguồn nào tải thành công trước thì lấy). |
+2. Kịch bản và Ví dụ Mã nguồn Thực tế (Real-world Scenarios)
+Scenario 1: Sử dụng Promise.all() cho trang chi tiết Đơn hàng (Order Details)
+// Giả lập các hàm gọi API thực tế trả về dữ liệu
+const fetchOrderItems = () => fetch("https://api.store.com/orders/99/items").then(res => res.json());
+const fetchUserProfile = () => fetch("https://api.store.com/users/123/profile").then(res => res.json());
+const fetchShippingStatus = () => fetch("https://api.store.com/shipping/track/99").then(res => res.json());
+
+async function loadOrderDashboard() {
+    try {
+        console.log("=== Đang tải toàn bộ dữ liệu đơn hàng... ===");
+        
+        // Kích hoạt chạy đồng thời cả 3 API cùng lúc để tối ưu thời gian (Parallel)
+        const [items, profile, shipping] = await Promise.all([
+            fetchOrderItems(),
+            fetchUserProfile(),
+            fetchShippingStatus()
+        ]);
+
+        console.log("✅ Tải thành công! Tiến hành render giao diện.");
+        console.log("Sản phẩm:", items);
+        console.log("Khách hàng:", profile);
+        console.log("Vận chuyển:", shipping);
+
+    } catch (error) {
+        // Nếu API Shipping bị lỗi 500, khối Promise.all sụp đổ lập tức và nhảy vào đây
+        console.error("❌ Thất bại: Không thể dựng trang do thiếu dữ liệu cốt lõi!", error.message);
+        showErrorPage("Hệ thống gặp sự cố khi tải thông tin đơn hàng.");
+    }
+}
+loadOrderDashboard();
+Scenario 2: Sử dụng Promise.allSettled() cho trang quản trị Dashboard tổng quan
+const fetchRevenue = () => fetch("https://api.store.com/analytics/revenue").then(res => res.json());
+const fetchComments = () => fetch("https://api.store.com/moderation/latest-comments").then(res => res.json());
+const fetchSystemLogs = () => fetch("https://api.sập-nguồn.com/logs").then(res => res.json()); // Giả lập nguồn lỗi
+
+async function loadIndependentWidgets() {
+    console.log("=== Đang nạp các Widget độc lập... ===");
+
+    const results = await Promise.allSettled([
+        fetchRevenue(),
+        fetchComments(),
+        fetchSystemLogs()
+    ]);
+
+    // Mảng results trả về cấu trúc gồm: { status: "fulfilled", value: ... } hoặc { status: "rejected", reason: ... }
+    results.forEach((result, index) => {
+        const widgetNames = ["Doanh Thu", "Bình Luận", "Nhật Ký Hệ Thống"];
+        
+        if (result.status === "fulfilled") {
+            console.log(`✅ Widget [${widgetNames[index]}] tải tốt:`, result.value);
+            renderWidgetSuccess(widgetNames[index], result.value);
+        } else {
+            console.warn(`⚠️ Widget [${widgetNames[index]}] bị lỗi ngầm:`, result.reason.message);
+            renderWidgetErrorPlaceholder(widgetNames[index]); // Vẫn vẽ giao diện nhưng hiển thị dấu ⚠️ báo lỗi cục bộ
+        }
+    });
+}
+loadIndependentWidgets();
+Scenario 3: Sử dụng Promise.race() để làm Cơ chế Timeout cho API nhạy cảm
+// API cổng thanh toán thật (Ví dụ đang bị nghẽn mạng mất 8 giây)
+const processBankPayment = () => {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve({ transactionId: "TX_RE293", status: "PAID" }), 8000);
+    });
+};
+
+// Hàm tạo một Promise chủ động ném lỗi sau thời gian định sẵn
+const createTimeoutTrigger = (seconds) => {
+    return new Promise((_, reject) => {
+        setTimeout(() => reject(new Error("Quá thời gian phản hồi từ ngân hàng!")), seconds * 1000);
+    });
+};
+
+async function executePaymentRequest() {
+    try {
+        console.log("=== Đang gửi yêu cầu thanh toán sang phía Ngân hàng... ===");
+
+        // Cuộc đua xem bên nào chạy xong trước
+        const winningResult = await Promise.race([
+            processBankPayment(),
+            createTimeoutTrigger(5) // Giới hạn chặn tối đa 5 giây
+        ]);
+
+        console.log("🎉 Thanh toán thành công rực rỡ!", winningResult);
+
+    } catch (error) {
+        // Vì hàm Timeout hoàn thành ở giây thứ 5, nhanh hơn API thật (8 giây), nên nó thắng cuộc đua và ném lỗi vào đây
+        console.error("🚨 Giao dịch thất bại:", error.message);
+        showToastNotification("Cổng thanh toán phản hồi chậm. Vui lòng kiểm tra lại số dư hoặc thử lại.");
+    }
+}
+executePaymentRequest();
+Scenario 4: Sử dụng Promise.any() để tải Tệp tin từ cụm Máy chủ dự phòng (CDN Cluster)
+// Các nguồn tải ảnh từ các CDN khác nhau
+const downloadFromSingaporeCDN = () => fetch("https://sg.cdn.com/banner.png").then(res => res.blob());
+const downloadFromVietnamCDN = () => fetch("https://vn.cdn.com/banner.png").then(res => res.blob());
+const downloadFromJapanCDN = () => fetch("https://jp.cdn.com/banner.png").then(res => res.blob());
+
+async function loadHeroBanner() {
+    try {
+        console.log("=== Đang tối ưu tìm kiếm máy chủ CDN tải ảnh nhanh nhất... ===");
+
+        // Chỉ cần 1 nguồn thành công đầu tiên. Nếu có 1 nguồn chết nhưng nguồn khác sống thì vẫn chạy tốt.
+        const fastestImageBlob = await Promise.any([
+            downloadFromSingaporeCDN(),
+            downloadFromVietnamCDN(),
+            downloadFromJapanCDN()
+        ]);
+
+        console.log("✅ Đã lấy được hình ảnh từ CDN tối ưu nhất!");
+        const imgUrl = URL.createObjectURL(fastestImageBlob);
+        document.getElementById("hero-banner").src = imgUrl;
+
+    } catch (aggregateError) {
+        // Chỉ lọt vào đây khi CẢ 3 máy chủ CDN đồng loạt sập hoàn toàn
+        console.error("🚨 Tất cả các máy chủ CDN đều không thể kết nối!");
+        console.log("Danh sách các lỗi chi tiết thu gom được:", aggregateError.errors);
+        
+        // Tải ảnh cục bộ (fallback local) dự phòng trong source code
+        document.getElementById("hero-banner").src = "images/default-banner.png";
+    }
+}
+loadHeroBanner();
