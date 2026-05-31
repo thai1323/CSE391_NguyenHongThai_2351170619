@@ -75,3 +75,152 @@ d.
     Bắt được Network error (Lỗi mạng): CÓ. Nếu mất kết nối Internet, đứt cáp, DNS bị sai hoặc sai URL nghiêm trọng, hàm fetch() sẽ thất bại ngay lập tức và ném ra một TypeError: Failed to fetch. Lỗi này sẽ bị catch giữ lại.
     Bắt được lỗi HTTP 404 / 500: CÓ (Nhờ dòng code kiểm tra thủ công). Bản thân fetch không coi 404 hay 500 là lỗi kết nối nên nó không tự ném vào catch. Nhưng vì trong đoạn code có đoạn logic kiểm tra if (!response.ok) { throw new Error(...) }, lệnh throw này đã chủ động ném lỗi và biến khối catch trở thành nơi hứng lỗi 404 / 500.
     Bắt được JSON parse error (Lỗi cú pháp JSON): CÓ. Nếu Server phản hồi thành công (ví dụ mã 200) nhưng dữ liệu trả về lại là một chuỗi văn bản thuần (Plain Text), HTML (ví dụ trang báo lỗi của Nginx) hoặc chuỗi JSON bị lỗi cú pháp, phương thức response.json() sẽ không parse được và tự động ném ra một lỗi SyntaxError: Unexpected token.... Lỗi này sẽ bị khối catch tóm gọn.
+
+### Câu A3 — Promise States
+1. Sơ đồ 3 trạng thái của một Promise
++-------------------+
+                      |      PENDING      |  <--- Trạng thái khởi tạo ban đầu
+                      | (Đang chờ xử lý)  |       (Mặc định: undefined)
+                      +-------------------+
+                                |
+        +-----------------------+-----------------------+
+        |                                               |
+        |  Tác vụ thành công                            |  Tác vụ thất bại
+        |  Gọi hàm resolve(value)                       |  Gọi hàm reject(error)
+        v                                               v
++-------------------+                           +-------------------+
+|     FULFILLED     |                           |     REJECTED      |
+|  (Đã hoàn thành)  |                           |   (Bị từ chối)    |
++-------------------+                           +-------------------+
+        |                                               |
+        v                                               v
+  Kích hoạt hàm .then()                           Kích hoạt hàm .catch()
+
+2. 
+Callback Hell là: là hiện tượng các hàm xử lý bất đồng bộ lồng nhau quá nhiều cấp thông qua các hàm gọi lại (callbacks).
+Khi một tác vụ bất đồng bộ sau cần kết quả của tác vụ bất đồng bộ trước làm tham số đầu vào, các lập trình viên thời kỳ cũ buộc phải viết code thụt lề sâu dần về phía bên phải.
+Tác hại của Callback Hell:
+    Khó đọc & khó bảo trì: Cấu trúc mã nguồn bị kéo dài theo chiều ngang giống hình mũi tên hoặc kim tự tháp, khiến việc theo dõi luồng chạy cực kỳ mệt mỏi.
+    Bẫy quản lý lỗi (Error Handling): Rất khó bắt lỗi một cách tập trung. Bạn phải viết các dòng kiểm tra lỗi (if (err)) lặp đi lặp lại ở mọi cấp lồng nhau.
+    Khó tái sử dụng: Việc bóc tách hoặc tái cấu trúc một đoạn mã nhỏ nằm sâu bên trong cấu trúc lồng nhau là một cực hình.
+3. Minh họa ví dụ: 4 cấp Callback Hell
+Hãy tưởng tượng một quy trình đặt đồ ăn online gồm 4 bước bất đồng bộ nối tiếp nhau:
+Xác thực tài khoản -> 2. Kiểm tra số dư ví -> 3. Tạo đơn hàng _> 4. Gửi thông báo SMS.
+Mã nguồn sử dụng Callback truyền thống (Bị Callback Hell):
+// Giả lập hàm gọi API xác thực bằng Callback
+function verifyUser(userId, callback) {
+    setTimeout(() => {
+        console.log("1. Xác thực người dùng thành công.");
+        callback(null, { userId: userId, username: "hoang_vinh" });
+    }, 500);
+}
+
+function checkWallet(username, callback) {
+    setTimeout(() => {
+        console.log("2. Ví đủ tiền thanh toán.");
+        callback(null, { balance: 500000 });
+    }, 500);
+}
+
+function createOrder(item, callback) {
+    setTimeout(() => {
+        console.log("3. Đã khởi tạo đơn hàng: " + item);
+        callback(null, { orderId: "ORD999", status: "Success" });
+    }, 500);
+}
+
+function sendSMS(orderId, callback) {
+    setTimeout(() => {
+        console.log("4. Đã gửi tin nhắn SMS xác nhận.");
+        callback(null, "SMS_SENT_OK");
+    }, 500);
+}
+
+// KÍCH HOẠT CHẠY - Gặp thảm họa Callback Hell lồng nhau 4 cấp (Pyramid of Doom)
+verifyUser("USER_123", (err1, user) => {
+    if (err1) {
+        console.error("Lỗi xác thực:", err1);
+    } else {
+        checkWallet(user.username, (err2, wallet) => {
+            if (err2) {
+                console.error("Lỗi ví tiền:", err2);
+            } else {
+                createOrder("Bún Chả Chấm", (err3, order) => {
+                    if (err3) {
+                        console.error("Lỗi tạo đơn:", err3);
+                    } else {
+                        sendSMS(order.orderId, (err4, smsStatus) => {
+                            if (err4) {
+                                console.error("Lỗi gửi tin:", err4);
+                            } else {
+                                console.log("==> HOÀN THÀNH QUY TRÌNH ĐẶT HÀNG! Trạng thái:", smsStatus);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+});
+4. Giải pháp: Cải tiến cấu trúc (Refactor) thành Async / Await
+Để giải quyết triệt để Callback Hell, chúng ta sẽ bọc các hàm ngầm định bên trên bằng cấu trúc Promise, sau đó sử dụng bộ đôi từ khóa async/await (được giới thiệu từ ES7). Cách làm này biến mã nguồn bất đồng bộ nhìn gọn gàng, tuần tự giống hệt như mã đồng bộ thông thường.
+Mã nguồn sau khi tối ưu (Refactor):
+// Chuyển đổi các hàm gốc sang trả về Promise thay vì nhận callback
+const verifyUserPromise = (userId) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log("1. [Promise] Xác thực người dùng thành công.");
+            resolve({ userId: userId, username: "hoang_vinh" });
+        }, 500);
+    });
+};
+
+const checkWalletPromise = (username) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log("2. [Promise] Ví đủ tiền thanh toán.");
+            resolve({ balance: 500000 });
+        }, 500);
+    });
+};
+
+const createOrderPromise = (item) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log("3. [Promise] Đã khởi tạo đơn hàng: " + item);
+            resolve({ orderId: "ORD999", status: "Success" });
+        }, 500);
+    });
+};
+
+const sendSMSPromise = (orderId) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log("4. [Promise] Đã gửi tin nhắn SMS xác nhận.");
+            resolve("SMS_SENT_OK");
+        }, 500);
+    });
+};
+
+// HÀM ĐIỀU PHỐI CHÍNH: Phẳng hóa code hoàn toàn bằng Async/Await kết hợp Try...Catch
+async function executeOrderWorkflow() {
+    try {
+        // Code chạy thẳng một mạch dọc xuống, không còn thụt lề ô vuông
+        const user = await verifyUserPromise("USER_123");
+        
+        const wallet = await checkWalletPromise(user.username);
+        
+        const order = await createOrderPromise("Bún Chả Chấm");
+        
+        const smsStatus = await sendSMSPromise(order.orderId);
+        
+        console.log("==> HOÀN THÀNH QUY TRÌNH ĐẶT HÀNG! Trạng thái:", smsStatus);
+        
+    } catch (error) {
+        // Quản lý lỗi tập trung duy nhất tại một nơi cho cả 4 bước bất đồng bộ
+        console.error("Quy trình đặt hàng thất bại tại một trong các bước:", error);
+    }
+}
+
+// Kích hoạt chạy thử nghiệm quy trình mới phẳng hóa
+executeOrderWorkflow();
