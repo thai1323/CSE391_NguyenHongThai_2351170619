@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Directory (CRUD)</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>User Directory</h1>
+            <div class="actions">
+                <input type="text" id="searchInput" placeholder="Tìm theo tên hoặc email...">
+                <button id="addNewBtn" class="btn-primary">+ Thêm User</button>
+            </div>
+        </header>
+
+        <!-- Bảng danh sách User -->
+        <main class="user-list-container">
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th>Tên</th>
+                        <th>Email</th>
+                        <th>Công ty</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <!-- Skeleton loaders hoặc dữ liệu sẽ hiển thị ở đây -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <!-- Modal Form (Dùng chung cho Add và Edit) -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Thêm User Mới</h2>
+            <form id="userForm">
+                <input type="hidden" id="userIdInput">
+                <div class="form-group">
+                    <label>Họ và tên</label>
+                    <input type="text" id="userName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="userEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Tên công ty</label>
+                    <input type="text" id="userCompany" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="closeModal">Hủy</button>
+                    <button type="submit" class="btn-primary" id="saveBtn">Lưu lại</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
