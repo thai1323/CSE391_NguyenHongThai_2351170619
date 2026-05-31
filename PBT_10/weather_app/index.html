@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài B1 — Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="weather-app">
+        <header class="search-box">
+            <input type="text" id="cityInput" placeholder="Nhập tên thành phố (Ví dụ: Hanoi, Tokyo...)" autocomplete="off">
+            <button id="searchBtn">Tìm kiếm</button>
+        </header>
+
+        <div class="history-container">
+            <span class="history-title">Lịch sử:</span>
+            <div id="historyList" class="history-list">
+                </div>
+        </div>
+
+        <main class="content-display">
+            
+            <div id="loadingState" class="state-view hidden">
+                <div class="spinner"></div>
+                <p>Đang tải dữ liệu thời tiết...</p>
+            </div>
+
+            <div id="errorState" class="state-view hidden">
+                <div class="error-icon">⚠️</div>
+                <p id="errorText">Có lỗi xảy ra trong quá trình lấy dữ liệu.</p>
+            </div>
+
+            <div id="successState" class="state-view hidden">
+                <h2 id="cityName" class="location-title">Hà Nội</h2>
+                <div class="main-weather">
+                    <div id="weatherIcon" class="weather-icon">☀️</div>
+                    <div class="temp-container">
+                        <span id="temperature">28</span><span class="unit">°C</span>
+                    </div>
+                </div>
+                <p id="weatherDesc" class="weather-desc">Trời quang mây tạnh</p>
+                
+                <div class="extra-info">
+                    <div class="info-card">
+                        <span class="info-label">💧 Độ ẩm</span>
+                        <span id="humidity" class="info-value">75%</span>
+                    </div>
+                    <div class="info-card">
+                        <span class="info-label">💨 Tốc độ gió</span>
+                        <span id="windspeed" class="info-value">12 km/h</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
