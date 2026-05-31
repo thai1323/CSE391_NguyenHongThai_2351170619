@@ -224,3 +224,127 @@ async function executeOrderWorkflow() {
 
 // Kích hoạt chạy thử nghiệm quy trình mới phẳng hóa
 executeOrderWorkflow();
+## PHẦN C — PHÂN TÍCH 
+### Câu C1 — Error Handling Strategy
+1. Xử lý lỗi Network Errors (Mất kết nối mạng giữa chừng)
+Chiến lược xử lý:
+Phát hiện chủ động: Khi người dùng đang thao tác (ví dụ: bấm nút "Thanh toán") mà thiết bị mất kết nối internet, fetch sẽ lập tức ném ra lỗi thuộc kiểu TypeError: Failed to fetch.
+
+Trải nghiệm người dùng (UX): Không để ứng dụng bị đóng băng hoặc chỉ hiển thị vòng xoay loading vô tận. Lập tức hiển thị một thanh thông báo (Toast notification) hoặc màn hình chặn (Overlay) thông báo: "Mất kết nối Internet. Vui lòng kiểm tra lại mạng mạng của bạn.".
+
+Lắng nghe sự kiện hệ thống: Sử dụng sự kiện window.addEventListener('online'/'offline') để tự động phục hồi hoặc vô hiệu hóa các nút chức năng quan trọng.
+2. Xử lý lỗi API Errors (Server trả về mã lỗi 404, 429, 500)
+Mỗi nhóm mã trạng thái HTTP (HTTP Status Codes) đại diện cho một ngữ cảnh lỗi khác nhau, do đó cần có kịch bản ứng phó riêng biệt:
+
+Mã 404 (Not Found - Không tìm thấy tài nguyên):
+Ngữ cảnh: Người dùng truy cập vào một link sản phẩm đã bị xóa hoặc sai ID.
+
+Xử lý: Điều hướng người dùng về trang lỗi 404 - Product Not Found được thiết kế đẹp mắt kèm theo danh sách "Sản phẩm gợi ý khác" để giữ chân khách hàng, thay vì để màn hình trống.
+
+Mã 429 (Too Many Requests - Quá nhiều yêu cầu / Bị chặn Spam):
+Ngữ cảnh: Người dùng (hoặc bot) liên tục click spam nút "Áp mã giảm giá".
+
+Xử lý: Đọc Header Retry-After từ Server trả về (nếu có) để biết cần chờ bao nhiêu giây. Khóa (Disabled) nút chức năng đó lại, hiển thị đồng hồ đếm ngược và thông báo: "Bạn đang thao tác quá nhanh. Vui lòng thử lại sau X giây.".
+Mã 500 (Internal Server Error - Lỗi hệ thống máy chủ):
+Ngữ cảnh: Database của Server bị quá tải hoặc code backend gặp lỗi crash.
+
+Xử lý: Hiển thị thông báo chung mang tính xoa dịu: "Hệ thống đang bận hoặc đang bảo trì. Vui lòng quay lại sau ít phút". Đồng thời, hệ thống frontend cần tự động ghi nhận (Log) lỗi này lên các công cụ giám sát tập trung (như Sentry).
+3. Timeout Handling (API phản hồi quá chậm > 10 giây)
+Mặc định, fetch của trình duyệt không có thời gian timeout định sẵn (nó có thể chờ lên đến vài phút tùy cấu hình trình duyệt). Trong E-commerce, việc bắt người dùng chờ quá 10 giây cho một tác vụ tải danh sách sản phẩm là không thể chấp nhận được.
+
+Chúng ta sẽ giải quyết bằng cách kết hợp fetch với AbortController để chủ động hủy request khi vượt quá thời gian cho phép.
+Mã nguồn fetchWithTimeout(url, options, ms):
+async function fetchWithTimeout(url, options = {}, ms = 10000) {
+    // 1. Khởi tạo bộ điều khiển hủy bỏ tác vụ
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    // 2. Thiết lập đồng hồ đếm ngược
+    const timeoutId = setTimeout(() => {
+        controller.abort(); // Kích hoạt hủy bỏ request nếu hết giờ
+    }, ms);
+
+    try {
+        // 3. Gắn signal vào cấu hình fetch
+        const response = await fetch(url, { ...options, signal });
+        clearTimeout(timeoutId); // Xóa bộ đếm ngược nếu fetch thành công trước thời hạn
+        return response;
+    } catch (error) {
+        clearTimeout(timeoutId); // Đảm bảo xóa bộ đếm nếu có lỗi khác xảy ra
+        
+        // Kiểm tra xem lỗi này có phải do chúng ta chủ động abort hay không
+        if (error.name === 'AbortError') {
+            throw new Error(`Request Timeout: API không phản hồi sau ${ms / 1000} giây.`);
+        }
+        throw error; // Ném tiếp các lỗi network khác nếu có
+    }
+}
+
+// ---- HƯỚNG DẪN SỬ DỤNG THỰC TẾ ----
+// fetchWithTimeout("https://api.example.com/products", {}, 10000)
+//     .then(res => console.log("Thành công"))
+//     .catch(err => console.error("Thất bại:", err.message));
+
+Giải thích code:
+AbortController cung cấp một đối tượng signal. Khi ta truyền signal này vào fetch, fetch sẽ liên tục lắng nghe tín hiệu từ bộ điều khiển.
+
+Nếu hàm setTimeout chạy trước (đạt mốc ms chỉ định), lệnh controller.abort() được kích hoạt, khiến fetch lập tức dừng việc chờ đợi và ném ra một lỗi có thuộc tính name bằng 'AbortError'.
+
+4. Retry Logic (Cơ chế tự động thử lại)
+Đối với các lỗi mang tính tạm thời (như lỗi kết nối mạng chập chờn, rớt gói tin hoặc Server bị quá tải tích tắc), giải pháp tốt nhất là tự động gửi lại yêu cầu (Retry) vài lần trước khi chính thức báo lỗi cho người dùng.
+Mã nguồn fetchWithRetry(url, options, maxRetries, delay):
+async function fetchWithRetry(url, options = {}, maxRetries = 3, delay = 2000) {
+    let lastError = null;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            console.log(`Đang thử tải lần ${attempt}/${maxRetries}...`);
+            
+            // Sử dụng luôn hàm fetch có chống nghẽn Timeout ở Mục 3 phía trên
+            const response = await fetchWithTimeout(url, options, 10000);
+
+            // Nếu kết nối được nhưng Server báo lỗi 500 hoặc 429, chúng ta cũng cho phép retry
+            if (!response.ok) {
+                if (response.status === 500 || response.status === 429) {
+                    throw new Error(`HTTP Error ${response.status}`);
+                }
+            }
+
+            return response; // Trả về kết quả ngay lập tức nếu thành công mượt mà
+            
+        } catch (error) {
+            lastError = error;
+            console.warn(`Lần thử ${attempt} thất bại. Lý do: ${error.message}`);
+
+            // Nếu đã chạm tới giới hạn số lần thử lại cuối cùng, thoát vòng lặp để ném lỗi
+            if (attempt === maxRetries) break;
+
+            // Kỹ thuật trì hoãn (Delay) trước khi sang lần thử kế tiếp
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+    }
+
+    // Nếu chạy hết số lần lặp mà vẫn không thành công, ném ra lỗi cuối cùng thu thập được
+    throw new Error(`Tải dữ liệu thất bại sau ${maxRetries} lần thử lại. Lỗi cuối: ${lastError.message}`);
+}
+
+// ---- HƯỚNG DẪN SỬ DỤNG THỰC TẾ ----
+// async function loadCartData() {
+//     try {
+//         const response = await fetchWithRetry("https://api.example.com/cart", {}, 3, 2000);
+//         const data = await response.json();
+//         console.log("Dữ liệu giỏ hàng:", data);
+//     } catch (err) {
+//         // Hiển thị UI Toast thông báo lỗi tổng cuối cùng cho người dùng
+//         alert(err.message);
+//     }
+// }
+// loadCartData();
+
+Giải thích code:
+Vòng lặp for có kiểm soát: Hàm sử dụng một vòng lặp chạy từ 1 đến maxRetries. Nếu dòng lệnh await fetchWithTimeout chạy thành công, lệnh return response được kích hoạt phá vỡ vòng lặp và kết thúc hàm sớm.
+
+Cơ chế bẫy lỗi cô lập: Khối try...catch nằm bên trong vòng lặp giúp cô lập các lỗi xảy ra ở lần thử đó. Thay vì làm sập toàn bộ hàm, nó ghi nhận lỗi vào biến lastError và cho phép vòng lặp tiếp tục xoay sang lượt tiếp theo.
+
+Hàm đợi bất đồng bộ (Delay Promise): Dòng lệnh await new Promise(resolve => setTimeout(resolve, delay)) tạo ra một khoảng nghỉ (ví dụ 2 giây) giữa các lần thử. Điều này rất quan trọng vì nếu mạng đang rớt hoặc Server đang nghẽn, việc gửi 3 request liên tục trong 1 mili giây sẽ vô tác dụng và càng làm nặng thêm cho hệ thống. Khoảng nghỉ giúp hệ thống mạng/máy chủ có thời gian hồi phục.
+
